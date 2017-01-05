@@ -1,0 +1,1071 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo,NexT,GitHub Pages," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1. 创建站点1.1 安装Git1sudo apt-get install git-core
+1.2 安装Node.js推荐使用nvm安装Node.js① cURL:1curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+② Wget:1wget -qO- https://raw.github.com/creationi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Hexo搭建个人博客">
+<meta property="og:url" content="http://samwong.im/2016/12/31/use_hexo_to_build_personal_blog/index.html">
+<meta property="og:site_name" content="Sam Wong">
+<meta property="og:description" content="1. 创建站点1.1 安装Git1sudo apt-get install git-core
+1.2 安装Node.js推荐使用nvm安装Node.js① cURL:1curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+② Wget:1wget -qO- https://raw.github.com/creationi">
+<meta property="og:updated_time" content="2017-01-05T13:34:37.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Hexo搭建个人博客">
+<meta name="twitter:description" content="1. 创建站点1.1 安装Git1sudo apt-get install git-core
+1.2 安装Node.js推荐使用nvm安装Node.js① cURL:1curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+② Wget:1wget -qO- https://raw.github.com/creationi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '1045696',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'PMBAGVNUG9',
+      apiKey: '63dcab934ccb229b0957e2530079edb4',
+      indexName: 'samwong',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://samwong.im/2016/12/31/use_hexo_to_build_personal_blog/"/>
+
+
+
+
+
+  <title> 使用Hexo搭建个人博客 | Sam Wong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f404ff6ce8f5c24e63d26614d8f843b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Sam Wong</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          <li class="menu-item menu-item-home">
+            <a href="/" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              
+              首页
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              
+              归档
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              
+              关于
+            </a>
+          </li>
+        
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://samwong.im/2016/12/31/use_hexo_to_build_personal_blog/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Sam Wong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Sam Wong">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Sam Wong" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用Hexo搭建个人博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-31T12:58:16+08:00">
+                2016-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统工具链/" itemprop="url" rel="index">
+                    <span itemprop="name">系统工具链</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/31/use_hexo_to_build_personal_blog/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/31/use_hexo_to_build_personal_blog/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/31/use_hexo_to_build_personal_blog/" class="leancloud_visitors" data-flag-title="使用Hexo搭建个人博客">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-创建站点"><a href="#1-创建站点" class="headerlink" title="1. 创建站点"></a>1. 创建站点</h2><h3 id="1-1-安装Git"><a href="#1-1-安装Git" class="headerlink" title="1.1 安装Git"></a>1.1 安装Git</h3><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install git-core</div></pre></td></tr></table></figure>
+<h3 id="1-2-安装Node-js"><a href="#1-2-安装Node-js" class="headerlink" title="1.2 安装Node.js"></a>1.2 安装Node.js</h3><p>推荐使用<code>nvm</code>安装Node.js<br>① <strong>cURL:</strong><br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/creationix/nvm/master/install.<span class="keyword">sh</span> | <span class="keyword">sh</span></div></pre></td></tr></table></figure></p>
+<p>② <strong>Wget:</strong><br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -qO- http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/creationix/nvm/master/install.<span class="keyword">sh</span> | <span class="keyword">sh</span></div></pre></td></tr></table></figure></p>
+<p>安装完成后，重启终端并执行下列命令即可安装 Node.js。<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nvm <span class="keyword">install</span> stable</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="1-3-安装Hexo"><a href="#1-3-安装Hexo" class="headerlink" title="1.3 安装Hexo"></a>1.3 安装Hexo</h3><p>使用<code>npm</code>安装Hexo<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo-<span class="keyword">cli</span></div></pre></td></tr></table></figure></p>
+<h3 id="1-4-创建博客站点"><a href="#1-4-创建博客站点" class="headerlink" title="1.4 创建博客站点"></a>1.4 创建博客站点</h3><p>本文博客站点根目录为<code>blog</code>，如下：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">hexo</span> init <span class="keyword">blog</span></div><div class="line"><span class="symbol">cd</span> <span class="keyword">blog</span></div><div class="line"><span class="symbol">npm</span> install</div></pre></td></tr></table></figure></p>
+<h2 id="2-安装配置NexT主题"><a href="#2-安装配置NexT主题" class="headerlink" title="2. 安装配置NexT主题"></a>2. 安装配置NexT主题</h2><h3 id="2-1-安装NexT主题"><a href="#2-1-安装NexT主题" class="headerlink" title="2.1 安装NexT主题"></a>2.1 安装NexT主题</h3><p>在Hexo站点根目录下，执行如下命令：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> blog</div><div class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/iissnan/hexo-theme-<span class="keyword">next</span> themes/<span class="keyword">next</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-2-配置NexT主题"><a href="#2-2-配置NexT主题" class="headerlink" title="2.2 配置NexT主题"></a>2.2 配置NexT主题</h3><p>修改站点配置文件，启用NexT主题：<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theme: <span class="keyword">next</span></div></pre></td></tr></table></figure></p>
+<p>基本配置方法可参考：<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">http://theme-next.iissnan.com/</a></p>
+<h2 id="3-本文自定义配置"><a href="#3-本文自定义配置" class="headerlink" title="3. 本文自定义配置"></a>3. 本文自定义配置</h2><p><strong>注：</strong><br>① <strong>站点配置文件</strong>：<code>blog/_config.yml</code><br>② <strong>主题配置文件</strong>：<code>blog/themes/next/_config.yml</code></p>
+<h3 id="3-1-选择NexT-Scheme"><a href="#3-1-选择NexT-Scheme" class="headerlink" title="3.1 选择NexT Scheme"></a>3.1 选择NexT Scheme</h3><p>本文选择<code>Pisces</code>，修改主题配置文件：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># Schemes</span></div><div class="line"><span class="meta">#scheme: Muse</span></div><div class="line"><span class="meta">#scheme: Mist</span></div><div class="line">scheme: Pisces</div></pre></td></tr></table></figure></p>
+<h3 id="3-2-设置语言"><a href="#3-2-设置语言" class="headerlink" title="3.2 设置语言"></a>3.2 设置语言</h3><p>修改站点配置文件：<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">language:</span> <span class="built_in">zh</span>-Hans</div></pre></td></tr></table></figure></p>
+<h3 id="3-3-设置菜单"><a href="#3-3-设置菜单" class="headerlink" title="3.3 设置菜单"></a>3.3 设置菜单</h3><p>考虑到菜单栏的<code>分类</code>和<code>标签</code>和下面站点概览中的分类和标签有重复，有点冗余，因此去掉左侧菜单中的分类和标签，并加以修改保证站点概览处的<code>分类</code>和<code>标签</code>可链接和正常跳转。<br>① 在主题配置文件中修改菜单内容，保留分类和标签的的菜单项及页面路径，如下：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">menu:</span></div><div class="line"><span class="symbol">  home:</span> /</div><div class="line"><span class="symbol">  categories:</span> /categories</div><div class="line"><span class="symbol">  archives:</span> /archives</div><div class="line"><span class="symbol">  tags:</span> /tags</div><div class="line"><span class="symbol">  about:</span> /about</div><div class="line">  <span class="meta">#sitemap: /sitemap.xml</span></div><div class="line">  <span class="meta">#commonweal: /404.html</span></div></pre></td></tr></table></figure></p>
+<p>② 在文件<code>themes/next/layout/_partials/header.swig</code>中添加如下语句块：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">if</span> itemName != <span class="string">'categories'</span> &amp;&amp; itemName != <span class="string">'tags'</span> %&#125;</div><div class="line">  ......</div><div class="line">&#123;% endif %&#125;</div></pre></td></tr></table></figure></p>
+<p>修改方法如下：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"site-nav"</span>&gt;</span></span></div><div class="line">  ......</div><div class="line">  <span class="template-tag">&#123;% <span class="name"><span class="name">if</span></span> theme.menu %&#125;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"menu"</span> <span class="attr">class</span>=<span class="string">"menu"</span>&gt;</span></div><div class="line">      <span class="template-tag">&#123;% <span class="name"><span class="name">for</span></span> name, path <span class="keyword">in</span> theme.menu %&#125;</span><span class="xml"></span></div><div class="line">        <span class="template-tag">&#123;% <span class="name">set</span> itemName = name.toLowerCase() %&#125;</span><span class="xml"></span></div><div class="line">        <span class="template-tag">&#123;% <span class="name"><span class="name">if</span></span> itemName != 'categories' &amp;&amp; itemName != 'tags' %&#125;</span><span class="xml">        </span></div><div class="line">	      <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"menu-item menu-item-</span></span><span class="template-variable">&#123;&#123; itemName &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">	        ......</div><div class="line">	      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"></span></div><div class="line">      <span class="template-tag">&#123;% <span class="name"><span class="name">endfor</span></span> %&#125;</span><span class="xml"></span></div><div class="line">     ......</div><div class="line">  <span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure></p>
+<h3 id="3-4-禁用RSS"><a href="#3-4-禁用RSS" class="headerlink" title="3.4 禁用RSS"></a>3.4 禁用RSS</h3><p>修改主题配置文件，如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">rss:</span> <span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<h3 id="3-5-分类和标签页禁用评论"><a href="#3-5-分类和标签页禁用评论" class="headerlink" title="3.5 分类和标签页禁用评论"></a>3.5 分类和标签页禁用评论</h3><p>修改站点目录<code>source/categories</code>和<code>source/tags</code>下的<code>index.md</code>，在<code>front-matter</code>中添加如下属性：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">comments:</span> <span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<h3 id="3-6-代码自动高亮"><a href="#3-6-代码自动高亮" class="headerlink" title="3.6 代码自动高亮"></a>3.6 代码自动高亮</h3><p>修改站点配置文件，将<code>auto_detect</code>设置为<code>true</code>，如下：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">highlight:</span></div><div class="line"><span class="attr">  enable:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  line_number:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  auto_detect:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  tab_replace:</span></div></pre></td></tr></table></figure></p>
+<h3 id="3-7-禁用文章目录自动编号"><a href="#3-7-禁用文章目录自动编号" class="headerlink" title="3.7 禁用文章目录自动编号"></a>3.7 禁用文章目录自动编号</h3><p>修改主题配置文件，设置<code>toc</code>–&gt;<code>number</code>为<code>false</code>，如下：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Table Of Contents in the Sidebar</span></div><div class="line"><span class="attr">toc:</span></div><div class="line"><span class="attr">  enable:</span> <span class="literal">true</span></div><div class="line"></div><div class="line">  <span class="comment"># Automatically add list number to toc.</span></div><div class="line"><span class="attr">  number:</span> <span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<h3 id="3-8-设置页面文章的篇数"><a href="#3-8-设置页面文章的篇数" class="headerlink" title="3.8 设置页面文章的篇数"></a>3.8 设置页面文章的篇数</h3><p>参考链接：<a href="http://theme-next.iissnan.com/faqs.html#setting-page-size" target="_blank" rel="external">http://theme-next.iissnan.com/faqs.html#setting-page-size</a></p>
+<p>① 安装Hexo插件<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> <span class="comment">--save hexo-generator-index</span></div><div class="line">npm <span class="keyword">install</span> <span class="comment">--save hexo-generator-archive</span></div><div class="line">npm <span class="keyword">install</span> <span class="comment">--save hexo-generator-tag</span></div></pre></td></tr></table></figure></p>
+<p>② 修改站点配置文件<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="attr">index_generator:</span></div><div class="line"><span class="attr">  per_page:</span> <span class="number">3</span></div><div class="line"></div><div class="line"><span class="attr">archive_generator:</span></div><div class="line"><span class="attr">  per_page:</span> <span class="number">20</span></div><div class="line"><span class="attr">  yearly:</span> <span class="literal">true</span></div><div class="line"><span class="attr">  monthly:</span> <span class="literal">true</span></div><div class="line"></div><div class="line"><span class="attr">tag_generator:</span></div><div class="line"><span class="attr">  per_page:</span> <span class="number">10</span></div></pre></td></tr></table></figure></p>
+<p>其中<code>per_page</code>是文章的数量。<br><strong>注：</strong> Hexo 3.2 版本不允许配置文件中存在重复的选项设置。因此，最好检查下站点配置文件中是否有存在上述同名的配置。如果存在，将两者配置在一起。</p>
+<h3 id="3-9-文章置顶"><a href="#3-9-文章置顶" class="headerlink" title="3.9 文章置顶"></a>3.9 文章置顶</h3><p>使用方式是利用<code>front-matter</code>，新增<code>sticky</code>，设定值是数值。值越高，顺序就越靠前；无<code>sticky</code>的文章，其<code>sticky</code>值默认为0。如下：<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># Post foo.md</span></div><div class="line"><span class="symbol">title:</span> foo</div><div class="line"><span class="symbol">sticky:</span> <span class="number">1</span></div><div class="line"></div><div class="line"><span class="meta"># Post bar.md</span></div><div class="line"><span class="symbol">title:</span> bar</div><div class="line"><span class="symbol">sticky:</span> <span class="number">10</span></div></pre></td></tr></table></figure></p>
+<h3 id="3-10-配置Algolia搜索功能"><a href="#3-10-配置Algolia搜索功能" class="headerlink" title="3.10 配置Algolia搜索功能"></a>3.10 配置Algolia搜索功能</h3><p>① <code>algolia 0.1.1</code>版本，存在跳转时出现<code>undefined</code>的问题，本文安装<code>algolia 0.2.0</code>版本，如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">npm</span> <span class="selector-tag">install</span> <span class="selector-tag">--save</span> <span class="selector-tag">hexo-algolia</span>@<span class="keyword">0</span>.<span class="keyword">2</span>.<span class="keyword">0</span></div></pre></td></tr></table></figure></p>
+<p>更新Algolia Index，<code>hexo algolia</code>。<br>② 除了在站点配置文件中配置algolia相关信息，还需要启用<code>search</code>字段，否则首页<code>搜索</code>按钮居中且无链接响应。如下：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">search</span>: true</div><div class="line"><span class="attribute">algolia</span>:</div><div class="line">  <span class="attribute">applicationID</span>: <span class="string">'applicationID'</span></div><div class="line">  <span class="attribute">apiKey</span>: <span class="string">'apiKey'</span></div><div class="line">  <span class="attribute">adminApiKey</span>: <span class="string">'adminApiKey'</span></div><div class="line">  <span class="attribute">indexName</span>: <span class="string">'indexName'</span></div><div class="line">  <span class="attribute">chunkSize</span>: <span class="number">5000</span></div></pre></td></tr></table></figure></p>
+<p>③ 修改主题配置文件，设置<code>enable</code>为<code>true</code>，启用algolia搜索，如下：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># Algolia Search</span></div><div class="line"><span class="symbol">algolia_search:</span></div><div class="line"><span class="symbol">  enable:</span> true</div><div class="line"><span class="symbol">  hits:</span></div><div class="line"><span class="symbol">    per_page:</span> <span class="number">10</span></div><div class="line"><span class="symbol">  labels:</span></div><div class="line"><span class="symbol">    input_placeholder:</span> Search for Posts</div><div class="line"><span class="symbol">    hits_empty:</span> <span class="string">"We didn't find any results for the search: $&#123;query&#125;"</span></div><div class="line"><span class="symbol">    hits_stats:</span> <span class="string">"$&#123;hits&#125; results found in $&#123;time&#125; ms"</span></div></pre></td></tr></table></figure></p>
+<h3 id="3-11-自定义页面样式"><a href="#3-11-自定义页面样式" class="headerlink" title="3.11 自定义页面样式"></a>3.11 自定义页面样式</h3><p>官方NexT主题Pisces Scheme宽度有点窄小，本文选择将其扩展到全屏，具体样式见<a href="http://samwong.im">http://samwong.im</a>。</p>
+<p><strong>① 修改布局</strong><br>在<code>blog/themes/next/source/css/_variables/custom.styl</code>文件末尾添加如下:<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Pisces Scheme</span></div><div class="line"><span class="meta"><span class="meta-keyword">$main</span>-desktop = 100%</span></div><div class="line"><span class="meta"><span class="meta-keyword">$sidebar</span>-desktop = 200px</span></div></pre></td></tr></table></figure></p>
+<p>在<code>blog/themes/next/source/css/_schemes/Pisces/_layout.styl</code>文件末尾添加:<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//自定义布局</span></div><div class="line"><span class="selector-class">.header-inner</span> &#123; </div><div class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">  +desktop-large() &#123;</div><div class="line">    <span class="selector-class">.container</span> &amp; &#123; <span class="attribute">width</span>: <span class="number">200px</span>; &#125;</div><div class="line">  &#125;</div><div class="line">  +tablet() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">  &#125;</div><div class="line">  +mobile() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.content-wrap</span> &#123; </div><div class="line">  <span class="attribute">width</span>: calc(<span class="number">100%</span> - <span class="number">200px</span>); </div><div class="line">  +tablet() &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  &#125;</div><div class="line">  +mobile() &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.footer-inner</span> &#123;</div><div class="line">  &amp;:before &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">0px</span>;</div><div class="line">  &#125;</div><div class="line">  +tablet() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">  &#125;</div><div class="line">  +mobile() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在<code>blog/themes/next/source/css/_schemes/Pisces/_sidebar.styl</code>文件末尾添加:<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//自定义布局</span></div><div class="line"><span class="selector-class">.sidebar-inner</span> &#123; </div><div class="line">  <span class="attribute">width</span>:<span class="number">200px</span>;</div><div class="line">  +tablet() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">  &#125;</div><div class="line">  +mobile() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">  &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>② 修改字体</strong><br>在<code>blog/themes/next/source/css/_variables/custom.styl</code>文件末尾添加如下:<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 标题，修改成你期望的字体族</span></div><div class="line"><span class="meta"><span class="meta-keyword">$font</span>-family-headings = Georgia, sans</span></div><div class="line"><span class="comment">// 修改成你期望的字体族</span></div><div class="line"><span class="meta"><span class="meta-keyword">$font</span>-family-base = "Microsoft YaHei", Verdana, sans-serif</span></div><div class="line"><span class="comment">// 代码字体</span></div><div class="line"><span class="meta"><span class="meta-keyword">$code</span>-font-family = "Input Mono", "PT Mono", Consolas, Monaco, Menlo, monospace</span></div><div class="line"><span class="comment">// 正文字体的大小</span></div><div class="line"><span class="meta"><span class="meta-keyword">$font</span>-size-base = 18px</span></div><div class="line"><span class="comment">// 代码字体的大小</span></div><div class="line"><span class="meta"><span class="meta-keyword">$code</span>-font-size = 16px</span></div></pre></td></tr></table></figure></p>
+<p><strong>③ 修改页脚不蒜子统计样式</strong></p>
+<p>将文件<code>blog/themes/layout/_layout.swig</code>中的不蒜子代码导入语句注释掉，如下：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name"><span class="name">include</span></span> '_scripts/third-party/analytics/busuanzi-counter.swig' %&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure></p>
+<p>修改为：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="comment">&lt;!-- </span></span><span class="template-tag">&#123;% <span class="name"><span class="name">include</span></span> '_scripts/third-party/analytics/busuanzi-counter.swig' %&#125;</span><span class="xml"><span class="comment"> --&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>在文件<code>blog/themes/next/layout/_partials/footer.swig</code>中添加不蒜子导入语句：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="selector-tag">div</span> class=<span class="string">"copyright"</span> &gt;</div><div class="line">  ......</div><div class="line">  &lt;<span class="selector-tag">span</span> class=<span class="string">"author"</span> itemprop=<span class="string">"copyrightHolder"</span>&gt;&#123;&#123; config<span class="selector-class">.author</span> &#125;&#125;&lt;/span&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>修改为：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"copyright"</span> &gt;</span></span></div><div class="line">  ......</div><div class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"author"</span> <span class="attr">itemprop</span>=<span class="string">"copyrightHolder"</span>&gt;</span><span class="template-variable">&#123;&#123; config.author &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></div><div class="line">  <span class="template-tag">&#123;% <span class="name"><span class="name">include</span></span> '../_scripts/third-party/analytics/busuanzi-counter.swig' %&#125;</span><span class="xml"></span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>修改文件<code>blog/themes/next/source/css/_common/components/third-party/busuanzi-counter.styl</code>中的<code>.busuanzi-count</code>，添加显示样式<code>display:inline-block;</code>，并修改<code>width</code>，如下：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.busuanzi-count</span> &#123;</div><div class="line">  <span class="attribute">display</span>: inline-block;</div><div class="line">  &amp;:before &#123;</div><div class="line">    <span class="attribute">content</span>: <span class="string">" "</span>;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="number">20px</span>;</div><div class="line">    <span class="attribute">min-height</span>: <span class="number">25px</span>;</div><div class="line">  &#125;</div><div class="line">  +tablet() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">    &amp;:before &#123; <span class="attribute">display</span>: none; &#125;</div><div class="line">  &#125;</div><div class="line">  +mobile() &#123;</div><div class="line">    <span class="attribute">width</span>: auto;</div><div class="line">    &amp;:before &#123; <span class="attribute">display</span>: none; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>去掉UV和PV之间的<code>|</code>，修改<code>.site-uv</code>的样式，将<code>content: &quot;|&quot;;</code>修改为<code>content: &quot;&quot;;</code>，并修改<code>padding-left</code>，如下：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.site-uv</span></div><div class="line">&#123;</div><div class="line">  <span class="attribute">margin-right</span>: <span class="number">10px</span>;</div><div class="line"></div><div class="line">  &amp;::after &#123;</div><div class="line">    <span class="attribute">content</span>: <span class="string">""</span>;</div><div class="line">    <span class="attribute">padding-left</span>: <span class="number">0px</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>④ 去掉多说分享中的无用项</strong><br>修改文件<code>blog/themes/next/layout/_partials/share/duoshuo_share.swig</code>，删除无用的列表项，如腾讯微博、QQ空间。</p>
+<h3 id="3-12-自定义多说评论样式"><a href="#3-12-自定义多说评论样式" class="headerlink" title="3.12 自定义多说评论样式"></a>3.12 自定义多说评论样式</h3><p>在多说<code>后台管理</code>–&gt;<code>站点设置</code>–&gt;<code>基本设置</code>–&gt;<code>自定义CSS样式</code>中选择以下一种样式输入。</p>
+<p><strong>① 样式一</strong><br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span>&#123;</div><div class="line">    <span class="attribute">border-radius</span>: <span class="number">27px</span>;<span class="comment">/*设置图像圆角效果,在这里我直接设置了超过width/2的像素，即为圆形了*/</span></div><div class="line">    -webkit-<span class="attribute">border-radius</span>: <span class="number">27px</span>;<span class="comment">/*圆角效果：兼容webkit浏览器*/</span></div><div class="line">    -moz-<span class="attribute">border-radius</span>:<span class="number">27px</span>;</div><div class="line">    <span class="attribute">box-shadow</span>: inset <span class="number">0</span> -<span class="number">1px</span> <span class="number">0</span> <span class="number">#3333</span>sf;<span class="comment">/*设置图像阴影效果*/</span></div><div class="line">    -webkit-<span class="attribute">box-shadow</span>: inset <span class="number">0</span> -<span class="number">1px</span> <span class="number">0</span> <span class="number">#3333</span>sf;</div><div class="line">    -webkit-<span class="attribute">transition</span>: <span class="number">0.4s</span>;   </div><div class="line">    -webkit-<span class="attribute">transition</span>: -webkit-transform <span class="number">0.4s</span> ease-out;</div><div class="line">    <span class="attribute">transition</span>: transform <span class="number">0.4s</span> ease-out;<span class="comment">/*变化时间设置为0.4秒(变化动作即为下面的图像旋转360读）*/</span></div><div class="line">        -moz-<span class="attribute">transition</span>: -moz-transform <span class="number">0.4s</span> ease-out;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span>:hover&#123;<span class="comment">/*设置鼠标悬浮在头像时的CSS样式*/</span></div><div class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span> <span class="number">#fff</span>; rgba(255,255,255,<span class="selector-class">.6</span>), inset 0 0 20px rgba(255,255,255,1);</div><div class="line">    -webkit-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span> <span class="number">#fff</span>; rgba(255,255,255,<span class="selector-class">.6</span>), inset 0 0 20px rgba(255,255,255,1);</div><div class="line">    <span class="attribute">transform</span>: rotateZ(<span class="number">360deg</span>);<span class="comment">/*图像旋转360度*/</span></div><div class="line">    -webkit-<span class="attribute">transform</span>: rotateZ(<span class="number">360deg</span>);</div><div class="line">        -moz-<span class="attribute">transform</span>: rotateZ(<span class="number">360deg</span>);</div><div class="line">       &#125;</div></pre></td></tr></table></figure></p>
+<p><strong>② 样式二</strong><br>参考链接：<a href="http://www.shejidaren.com/use-css3-to-create-a-beautiful-comment-ui.html" target="_blank" rel="external">http://www.shejidaren.com/use-css3-to-create-a-beautiful-comment-ui.html</a><br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-comments-tabs</span> <span class="selector-tag">li</span><span class="selector-class">.ds-tab</span> <span class="selector-tag">a</span><span class="selector-class">.ds-current</span> &#123;<span class="attribute">border</span>:<span class="number">0px</span>;<span class="attribute">color</span>:<span class="number">#848568</span>;<span class="attribute">text-shadow</span>:none;<span class="attribute">background</span>:<span class="number">#dddfc2</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-highlight</span> &#123;<span class="attribute">font-family</span>:Arial, Helvetica, sans-serif;<span class="attribute">font-size</span>:<span class="number">14px</span>;<span class="attribute">font-weight</span>:bold;<span class="attribute">color</span>:<span class="number">#848568</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-comments-tabs</span> <span class="selector-tag">li</span><span class="selector-class">.ds-tab</span> <span class="selector-tag">a</span><span class="selector-class">.ds-current</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#696a52</span>;<span class="attribute">background</span>:<span class="number">#d4d6ba</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">a</span><span class="selector-class">.ds-highlight</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#696a52</span> <span class="meta">!important</span>;&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> &#123;<span class="attribute">padding-left</span>:<span class="number">30px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">li</span><span class="selector-class">.ds-post</span>,<span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-hot-posts</span> &#123;<span class="attribute">overflow</span>:visible&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-post-self</span> &#123;<span class="attribute">padding</span>:<span class="number">10px</span> <span class="number">0</span> <span class="number">10px</span> <span class="number">10px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">li</span><span class="selector-class">.ds-post</span>,<span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-post-self</span> &#123;<span class="attribute">border</span>:<span class="number">0</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-avatar</span>, <span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-children</span> <span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">position</span>:absolute;<span class="attribute">top</span>:<span class="number">26px</span>;<span class="attribute">left</span>:-<span class="number">14px</span>;<span class="attribute">padding</span>:<span class="number">5px</span>;<span class="attribute">width</span>:<span class="number">36px</span>;<span class="attribute">height</span>:<span class="number">36px</span>;<span class="attribute">box-shadow</span>:-<span class="number">1px</span> <span class="number">0</span> <span class="number">1px</span> <span class="built_in">rgba</span>(0,0,0,.15) inset;<span class="attribute">border-radius</span>:<span class="number">46px</span>; <span class="attribute">background</span>:<span class="number">#E5E6D0</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-children</span> <span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">left</span>:-<span class="number">23px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span> &#123;<span class="attribute">display</span>:inline-block;<span class="attribute">padding</span>:<span class="number">1px</span>; <span class="attribute">width</span>:<span class="number">32px</span>;<span class="attribute">height</span>:<span class="number">32px</span>;<span class="attribute">border</span>:<span class="number">1px</span> solid <span class="number">#b9baa6</span>;<span class="attribute">border-radius</span>:<span class="number">50%</span>; <span class="attribute">background-color</span>:<span class="number">#fff</span> <span class="meta">!important</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">border-color</span>:<span class="number">#de5a4e</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-class">.ds-avatar</span> &gt; <span class="selector-tag">img</span> &#123;<span class="attribute">margin</span>:<span class="number">2px</span> <span class="number">0</span> <span class="number">0</span> <span class="number">2px</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> &#123;<span class="attribute">box-shadow</span>:none;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-children</span> <span class="selector-class">.ds-replybox</span><span class="selector-class">.ds-inline-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span>,</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span><span class="selector-class">.ds-inline-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">left</span>: <span class="number">0</span>;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">padding</span>: <span class="number">0</span>;<span class="attribute">width</span>: <span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">height</span>: <span class="number">32px</span> <span class="meta">!important</span>; <span class="attribute">background</span>: none;<span class="attribute">box-shadow</span>: none; &#125; </div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span><span class="selector-class">.ds-inline-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123;<span class="attribute">width</span>: <span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">height</span>: <span class="number">32px</span> <span class="meta">!important</span>; <span class="attribute">border-radius</span>:<span class="number">50%</span>;&#125; </div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span>,</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123; <span class="attribute">padding</span>:<span class="number">0</span>;<span class="attribute">width</span>:<span class="number">50px</span> <span class="meta">!important</span>;<span class="attribute">height</span>:<span class="number">50px</span> <span class="meta">!important</span>; <span class="attribute">border-radius</span>:<span class="number">5px</span>; &#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123;<span class="attribute">width</span>:<span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">height</span>:<span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">border-radius</span>:<span class="number">32px</span>;<span class="attribute">box-shadow</span>:<span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.22);</div><div class="line">							<span class="attribute">-webkit-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-moz-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-o-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-ms-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">transition</span>:.<span class="number">4s</span> all ease-in-out;</div><div class="line">							&#125;</div><div class="line"><span class="selector-class">.ds-post-self</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123;<span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-o-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-ms-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">transform</span>:<span class="built_in">rotate</span>(360deg);&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comment-body</span> &#123;<span class="attribute">background</span>: <span class="number">#F0F0E3</span>;<span class="attribute">padding</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">12px</span> <span class="number">32px</span>;<span class="attribute">border-radius</span>:<span class="number">5px</span>; <span class="attribute">box-shadow</span>:<span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,.15), <span class="number">0</span> <span class="number">1px</span> <span class="number">0</span> <span class="built_in">rgba</span>(255,255,255,.75) inset;&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comment-body</span> <span class="selector-tag">p</span>&#123;<span class="attribute">color</span>:<span class="number">#787968</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comments</span> <span class="selector-tag">a</span><span class="selector-class">.ds-user-name</span> &#123;<span class="attribute">font-weight</span>:bold;<span class="attribute">color</span>:<span class="number">#696A52</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comments</span> <span class="selector-tag">a</span><span class="selector-class">.ds-user-name</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#D32</span> <span class="meta">!important</span>;&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-hot-posts</span> &#123;<span class="attribute">border</span>:<span class="number">0</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-hot-posts</span> <span class="selector-class">.ds-gradient-bg</span> &#123;<span class="attribute">background</span>:none;&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> &#123;<span class="attribute">padding</span>:<span class="number">0</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-class">.ds-avatar</span>, <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-id">#ds-ctx-bubble</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span> &#123;<span class="attribute">position</span>:static;<span class="attribute">padding</span>:<span class="number">0</span>;<span class="attribute">border</span>:<span class="number">0</span>; <span class="attribute">background</span>:none;<span class="attribute">box-shadow</span>:none;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span>, <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-id">#ds-ctx-bubble</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span> &#123;<span class="attribute">width</span>:<span class="number">45px</span> <span class="meta">!important</span>;<span class="attribute">height</span>:<span class="number">45px</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-class">.ds-user-name</span>&#123;<span class="attribute">padding-left</span>:<span class="number">13px</span>;&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comment-body</span> <span class="selector-id">#ds-ctx</span> &#123;<span class="attribute">border-left</span>:<span class="number">1px</span> solid <span class="number">#b9baa6</span>;<span class="attribute">background-color</span>:<span class="number">#e8e8dc</span> <span class="meta">!important</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> &#123;<span class="attribute">margin-right</span>:-<span class="number">15px</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> &#123;<span class="attribute">position</span>:relative;<span class="attribute">padding</span>:<span class="number">10px</span> <span class="number">30px</span> <span class="number">10px</span> <span class="number">10px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">top</span>:<span class="number">6px</span>;<span class="attribute">left</span>:<span class="number">5px</span>;<span class="attribute">background</span>:none;<span class="attribute">box-shadow</span>:none;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-ctx-body</span> &#123;<span class="attribute">margin-left</span>:<span class="number">46px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-ctx-content</span> &#123;<span class="attribute">color</span>:<span class="number">#787968</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-ctx-head</span> <span class="selector-tag">a</span> &#123;<span class="attribute">color</span>:<span class="number">#696A52</span>;<span class="attribute">font-weight</span>:bold&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>③ 本文样式</strong><br>本文样式在<code>样式二</code>的基础上，对局部做了轻微修改。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-comments-tabs</span> <span class="selector-tag">li</span><span class="selector-class">.ds-tab</span> <span class="selector-tag">a</span><span class="selector-class">.ds-current</span> &#123;<span class="attribute">border</span>:<span class="number">0px</span>;<span class="attribute">color</span>:<span class="number">#848568</span>;<span class="attribute">text-shadow</span>:none;<span class="attribute">background</span>:<span class="number">#dddfc2</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-highlight</span> &#123;<span class="attribute">font-family</span>:Arial, Helvetica, sans-serif;<span class="attribute">font-size</span>:<span class="number">14px</span>;<span class="attribute">font-weight</span>:bold;<span class="attribute">color</span>:<span class="number">#848568</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-comments-tabs</span> <span class="selector-tag">li</span><span class="selector-class">.ds-tab</span> <span class="selector-tag">a</span><span class="selector-class">.ds-current</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#696a52</span>;<span class="attribute">background</span>:<span class="number">#d4d6ba</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">a</span><span class="selector-class">.ds-highlight</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#696a52</span> <span class="meta">!important</span>;&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> &#123;<span class="attribute">padding-left</span>:<span class="number">30px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">li</span><span class="selector-class">.ds-post</span>,<span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-hot-posts</span> &#123;<span class="attribute">overflow</span>:visible&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-post-self</span> &#123;<span class="attribute">padding</span>:<span class="number">10px</span> <span class="number">0</span> <span class="number">10px</span> <span class="number">10px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">li</span><span class="selector-class">.ds-post</span>,<span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-post-self</span> &#123;<span class="attribute">border</span>:<span class="number">0</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-avatar</span>, <span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-children</span> <span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">position</span>:absolute;<span class="attribute">top</span>:<span class="number">26px</span>;<span class="attribute">left</span>:-<span class="number">14px</span>;<span class="attribute">padding</span>:<span class="number">5px</span>;<span class="attribute">width</span>:<span class="number">36px</span>;<span class="attribute">height</span>:<span class="number">36px</span>;<span class="attribute">box-shadow</span>:-<span class="number">1px</span> <span class="number">0</span> <span class="number">1px</span> <span class="built_in">rgba</span>(0,0,0,.15) inset;<span class="attribute">border-radius</span>:<span class="number">46px</span>; <span class="attribute">background</span>:<span class="number">#E5E6D0</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-children</span> <span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">left</span>:-<span class="number">23px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span> &#123;<span class="attribute">display</span>:inline-block;<span class="attribute">padding</span>:<span class="number">1px</span>; <span class="attribute">width</span>:<span class="number">32px</span>;<span class="attribute">height</span>:<span class="number">32px</span>;<span class="attribute">border</span>:<span class="number">1px</span> solid <span class="number">#b9baa6</span>;<span class="attribute">border-radius</span>:<span class="number">50%</span>; <span class="attribute">background-color</span>:<span class="number">#fff</span> <span class="meta">!important</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">border-size</span>:<span class="number">4px</span>;<span class="attribute">border-color</span>:<span class="number">#5b565b</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-class">.ds-avatar</span> &gt; <span class="selector-tag">img</span> &#123;<span class="attribute">margin</span>:<span class="number">2px</span> <span class="number">0</span> <span class="number">0</span> <span class="number">2px</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> &#123;<span class="attribute">box-shadow</span>:none;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-tag">ul</span><span class="selector-class">.ds-children</span> <span class="selector-class">.ds-replybox</span><span class="selector-class">.ds-inline-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span>,</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span><span class="selector-class">.ds-inline-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">left</span>: <span class="number">0</span>;<span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">padding</span>: <span class="number">0</span>;<span class="attribute">width</span>: <span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">height</span>: <span class="number">32px</span> <span class="meta">!important</span>; <span class="attribute">background</span>: none;<span class="attribute">box-shadow</span>: none; &#125; </div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span><span class="selector-class">.ds-inline-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123;<span class="attribute">width</span>: <span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">height</span>: <span class="number">32px</span> <span class="meta">!important</span>; <span class="attribute">border-radius</span>:<span class="number">50%</span>;&#125; </div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> <span class="selector-tag">a</span><span class="selector-class">.ds-avatar</span>,</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123; <span class="attribute">padding</span>:<span class="number">0</span>;<span class="attribute">width</span>:<span class="number">45px</span> <span class="meta">!important</span>;<span class="attribute">height</span>:<span class="number">45px</span> <span class="meta">!important</span>; <span class="attribute">border-radius</span>:<span class="number">45px</span>; <span class="attribute">box-shadow</span>:<span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.22);</div><div class="line">							<span class="attribute">-webkit-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-moz-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-o-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-ms-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">transition</span>:.<span class="number">4s</span> all ease-in-out;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-o-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-ms-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">transform</span>:<span class="built_in">rotate</span>(360deg);&#125;						</div><div class="line"></div><div class="line"></div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123;<span class="attribute">width</span>:<span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">height</span>:<span class="number">32px</span> <span class="meta">!important</span>;<span class="attribute">border-radius</span>:<span class="number">32px</span>;<span class="attribute">box-shadow</span>:<span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.22);</div><div class="line">							<span class="attribute">-webkit-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-moz-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-o-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">-ms-transition</span>:.<span class="number">4s</span> all ease-in-out;<span class="attribute">transition</span>:.<span class="number">4s</span> all ease-in-out;</div><div class="line">							&#125;</div><div class="line"><span class="selector-class">.ds-post-self</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span> &#123;<span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-o-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">-ms-transform</span>:<span class="built_in">rotate</span>(360deg);<span class="attribute">transform</span>:<span class="built_in">rotate</span>(360deg);&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comment-body</span> &#123;<span class="attribute">background</span>: <span class="number">#F0F0E3</span>;<span class="attribute">padding</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">12px</span> <span class="number">32px</span>;<span class="attribute">border-radius</span>:<span class="number">5px</span>; <span class="attribute">box-shadow</span>:<span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,.15), <span class="number">0</span> <span class="number">1px</span> <span class="number">0</span> <span class="built_in">rgba</span>(255,255,255,.75) inset;&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comment-body</span> <span class="selector-tag">p</span>&#123;<span class="attribute">color</span>:<span class="number">#787968</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comments</span> <span class="selector-tag">a</span><span class="selector-class">.ds-user-name</span> &#123;<span class="attribute">font-weight</span>:bold;<span class="attribute">color</span>:<span class="number">#696A52</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comments</span> <span class="selector-tag">a</span><span class="selector-class">.ds-user-name</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#D32</span> <span class="meta">!important</span>;&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-hot-posts</span> &#123;<span class="attribute">border</span>:<span class="number">0</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-hot-posts</span> <span class="selector-class">.ds-gradient-bg</span> &#123;<span class="attribute">background</span>:none;&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> &#123;<span class="attribute">padding</span>:<span class="number">5px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span>, <span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-user-card</span> &#123;<span class="attribute">width</span>:<span class="number">137px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> &#123;<span class="attribute">padding</span>:<span class="number">0</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-class">.ds-avatar</span>, <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-id">#ds-ctx-bubble</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span> &#123;<span class="attribute">position</span>:static;<span class="attribute">padding</span>:<span class="number">0</span>;<span class="attribute">border</span>:<span class="number">0</span>; <span class="attribute">background</span>:none;<span class="attribute">box-shadow</span>:none;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">img</span>, <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-id">#ds-ctx-bubble</span> <span class="selector-class">.ds-avatar</span> <span class="selector-tag">a</span> &#123;<span class="attribute">width</span>:<span class="number">45px</span> <span class="meta">!important</span>;<span class="attribute">height</span>:<span class="number">45px</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-class">.ds-user-name</span> &#123;<span class="attribute">margin</span>:<span class="number">7px</span> <span class="number">0</span> <span class="number">0</span> <span class="number">11px</span>; <span class="attribute">height</span>:<span class="number">18px</span> <span class="meta">!important</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-id">#ds-user-card</span> <span class="selector-class">.ds-user-card-meta</span> &#123;<span class="attribute">margin</span>:<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">62px</span>;<span class="attribute">padding-top</span>:<span class="number">5px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-tag">a</span> &#123;<span class="attribute">color</span>:<span class="number">#848568</span>&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-bubble</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;<span class="attribute">color</span>:<span class="number">#696A52</span>&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-comment-body</span> <span class="selector-id">#ds-ctx</span> &#123;<span class="attribute">border-left</span>:<span class="number">1px</span> solid <span class="number">#b9baa6</span>;<span class="attribute">background-color</span>:<span class="number">#e8e8dc</span> <span class="meta">!important</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> &#123;<span class="attribute">margin-right</span>:-<span class="number">15px</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> &#123;<span class="attribute">position</span>:relative;<span class="attribute">padding</span>:<span class="number">10px</span> <span class="number">30px</span> <span class="number">10px</span> <span class="number">10px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-avatar</span> &#123;<span class="attribute">top</span>:<span class="number">6px</span>;<span class="attribute">left</span>:<span class="number">5px</span>;<span class="attribute">background</span>:none;<span class="attribute">box-shadow</span>:none;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-ctx-body</span> &#123;<span class="attribute">margin-left</span>:<span class="number">46px</span>;&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-ctx-content</span> &#123;<span class="attribute">color</span>:<span class="number">#787968</span>&#125;</div><div class="line"><span class="selector-id">#ds-reset</span> <span class="selector-id">#ds-ctx</span> <span class="selector-class">.ds-ctx-entry</span> <span class="selector-class">.ds-ctx-head</span> <span class="selector-tag">a</span> &#123;<span class="attribute">color</span>:<span class="number">#696A52</span>;<span class="attribute">font-weight</span>:bold&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.theme-next</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.duoshuo-ua-admin</span> &#123;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#717a4c</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.theme-next</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.duoshuo-ua-platform</span>, <span class="selector-class">.theme-next</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.duoshuo-ua-browser</span> &#123;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#717a4c</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.theme-next</span> <span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-replybox</span> &#123;</div><div class="line">    <span class="attribute">margin</span>:<span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-toolbar</span> &#123;</div><div class="line"><span class="attribute">padding</span>:<span class="number">10px</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#ds-thread</span> <span class="selector-id">#ds-reset</span> <span class="selector-class">.ds-powered-by</span> &#123;</div><div class="line"><span class="attribute">padding</span>:<span class="number">3px</span> <span class="number">0</span> <span class="number">10px</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="4. 遇到的问题"></a>4. 遇到的问题</h2><h3 id="4-1-Algolia搜索跳转时显示undefined"><a href="#4-1-Algolia搜索跳转时显示undefined" class="headerlink" title="4.1 Algolia搜索跳转时显示undefined"></a>4.1 Algolia搜索跳转时显示undefined</h3><p>参考链接：<a href="https://github.com/iissnan/hexo-theme-next/issues/1084" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next/issues/1084</a></p>
+<p><strong>方法一：</strong>在站点下<code>node_modules/hexo-algolia/lib/command.js</code>文件中添加<code>path</code>，然后执行<code>hexo algolia</code>重新生成索引。如下：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">var storedPost</span> = _.pick(data, [<span class="string">'title'</span>, <span class="string">'date'</span>, <span class="string">'slug'</span>, <span class="string">'path'</span>, <span class="string">'content'</span>, <span class="string">'excerpt'</span>, <span class="string">'objectID'</span>]);</div></pre></td></tr></table></figure></p>
+<p><strong>方法二：</strong>重新安装插件<code>hexo-algolia</code>，重装时指定版本为<code>0.2.0</code>，在站点根目录下执行<code>npm install hexo-algolia@0.2.0</code>，然后重新生成索引<code>hexo algolia</code>。</p>
+<h3 id="4-2-Algolia搜索第二次点击时出错"><a href="#4-2-Algolia搜索第二次点击时出错" class="headerlink" title="4.2 Algolia搜索第二次点击时出错"></a>4.2 Algolia搜索第二次点击时出错</h3><p>参考链接：<a href="https://github.com/iissnan/hexo-theme-next/issues/1354" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next/issues/1354</a></p>
+<p>右键打开<code>Inspect</code>模式，发现如下错误：<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Uncaught TypeError: Cannot <span class="keyword">read</span> <span class="keyword">property</span> <span class="string">'addEventListener'</span> <span class="keyword">of</span> null</div><div class="line">    at <span class="keyword">Object</span>.success ((<span class="keyword">index</span>):<span class="number">994</span>)</div><div class="line">    at j (<span class="keyword">index</span>.js?v=<span class="number">2.1</span>.<span class="number">3</span>:<span class="number">2</span>)</div><div class="line">    at <span class="keyword">Object</span>.fireWith [<span class="keyword">as</span> resolveWith] (<span class="keyword">index</span>.js?v=<span class="number">2.1</span>.<span class="number">3</span>:<span class="number">2</span>)</div><div class="line">    at x (<span class="keyword">index</span>.js?v=<span class="number">2.1</span>.<span class="number">3</span>:<span class="number">4</span>)</div><div class="line">    at XMLHttpRequest.&lt;anonymous&gt; (<span class="keyword">index</span>.js?v=<span class="number">2.1</span>.<span class="number">3</span>:<span class="number">4</span>)</div></pre></td></tr></table></figure></p>
+<p>hexo后台日志提示:<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/<span class="class"><span class="keyword">lib</span>/<span class="title">algolia</span>-<span class="title">instant</span>-<span class="title">search</span>/<span class="title">instantsearch</span>.<span class="title">min</span>.<span class="title">js</span>.<span class="title">map</span> 404 8.355 <span class="title">ms</span> - 64</span></div></pre></td></tr></table></figure></p>
+<p><strong>解决方法：</strong> 由于之前先安装了<code>hexo-generator-searchdb</code>插件，配置了本地搜索功能，后来有安装了Algolia搜索插件，导致发生冲突，卸载<code>hexo-generator-searchdb</code>后Algolia搜索功能正常。如下：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="built_in">remove</span> hexo-generator-searchdb</div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong> 使用Algolia搜索时，需要在站点配置文件中配置如下属性：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">search:</span> <span class="literal">true</span></div></pre></td></tr></table></figure></p>
+<h3 id="4-3-重装插件时提示权限错误"><a href="#4-3-重装插件时提示权限错误" class="headerlink" title="4.3 重装插件时提示权限错误"></a>4.3 重装插件时提示权限错误</h3><p>参考链接：<a href="https://github.com/nodeschool/discussions/issues/305" target="_blank" rel="external">https://github.com/nodeschool/discussions/issues/305</a></p>
+<p>安装插件<code>hexo-algolia</code>时，出现错误，如下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Please <span class="keyword">try</span> running <span class="keyword">this</span> command again <span class="keyword">as</span> root/Administrator.</div></pre></td></tr></table></figure></p>
+<p><strong>解决方法：</strong> 经检查发现，<code>～/.npm</code>目录下目录文件所有者和组均为<code>root</code>，修改<code>.npm</code>目录所有者为当前普通用户。<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo chown -R $(whoami) ~/.<span class="built_in">npm</span></div><div class="line">sudo chgrp -R $(whoami) ~/.<span class="built_in">npm</span></div></pre></td></tr></table></figure></p>
+<p>若还有错误，可发现站点根目录下<code>node_modules/.bin</code>的所有者和组也为<code>root</code>，将其修改为当前普通用户。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo chown -R <span class="variable">$(</span>whoami) node_modules/.bin</div><div class="line">sudo chgrp -R <span class="variable">$(</span>whoami) node_modules/.bin</div></pre></td></tr></table></figure></p>
+<h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5. 参考链接"></a>5. 参考链接</h2><ul>
+<li><a href="https://hexo.io/zh-cn/" target="_blank" rel="external">Hexo</a></li>
+<li><a href="http://duoshuo.com/" target="_blank" rel="external">多说</a></li>
+<li><a href="http://tongji.baidu.com/web/welcome/login" target="_blank" rel="external">百度统计</a></li>
+<li><a href="https://leancloud.cn/" target="_blank" rel="external">LeanCloud</a></li>
+<li><a href="https://www.algolia.com/" target="_blank" rel="external">Algolia</a></li>
+<li><a href="http://service.ibruce.info/" target="_blank" rel="external">不蒜子统计</a></li>
+<li><a href="https://www.addthis.com/" target="_blank" rel="external">AddThis</a></li>
+<li><a href="http://fontawesome.io/" target="_blank" rel="external">Font Awesome字体图标</a></li>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a></li>
+<li><a href="https://github.com/creationix/nvm" target="_blank" rel="external">Node Version Manager - nvm</a></li>
+<li><a href="http://www.faviconico.org/" target="_blank" rel="external">favicon.ico生成器</a></li>
+<li><a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="external">Front-matter</a></li>
+<li><a href="https://hexo.io/zh-cn/docs/#安装" target="_blank" rel="external">安装Hexo</a></li>
+<li><a href="http://theme-next.iissnan.com/" target="_blank" rel="external">配置NexT主题</a></li>
+<li><a href="http://theme-next.iissnan.com/faqs.html#setting-page-size" target="_blank" rel="external">设置页面文章的篇数</a></li>
+<li><a href="http://www.shejidaren.com/use-css3-to-create-a-beautiful-comment-ui.html" target="_blank" rel="external">用CSS3制作漂亮的设计达人留言评论样式</a></li>
+<li><a href="https://github.com/iissnan/hexo-theme-next/issues/1084" target="_blank" rel="external">NexT 5.1.0使用algolia搜索问题 </a></li>
+<li><a href="https://github.com/iissnan/hexo-theme-next/issues/1354" target="_blank" rel="external">Algolia搜索按钮第二次点击无响应</a></li>
+<li><a href="https://github.com/nodeschool/discussions/issues/305" target="_blank" rel="external">EACCES Error on install: run again as root/Administrator</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>请我吃糖果~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sam Wong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Sam Wong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/NexT/" rel="tag"># NexT</a>
+          
+            <a href="/tags/GitHub-Pages/" rel="tag"># GitHub Pages</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/" rel="next" title="Windows 10编译Hadoop 2.6.0源码">
+                <i class="fa fa-chevron-left"></i> Windows 10编译Hadoop 2.6.0源码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5868d93f6405e50d" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/31/use_hexo_to_build_personal_blog/"
+           data-title="使用Hexo搭建个人博客" data-url="http://samwong.im/2016/12/31/use_hexo_to_build_personal_blog/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sam Wong" />
+          <p class="site-author-name" itemprop="name">Sam Wong</p>
+          <p class="site-description motion-element" itemprop="description">后知后觉，勿忘初心。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ncepuwanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/wh694695498" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/ncepuwanghui" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建站点"><span class="nav-text">1. 创建站点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-安装Git"><span class="nav-text">1.1 安装Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-安装Node-js"><span class="nav-text">1.2 安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-安装Hexo"><span class="nav-text">1.3 安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-创建博客站点"><span class="nav-text">1.4 创建博客站点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-安装配置NexT主题"><span class="nav-text">2. 安装配置NexT主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-安装NexT主题"><span class="nav-text">2.1 安装NexT主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-配置NexT主题"><span class="nav-text">2.2 配置NexT主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-本文自定义配置"><span class="nav-text">3. 本文自定义配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-选择NexT-Scheme"><span class="nav-text">3.1 选择NexT Scheme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-设置语言"><span class="nav-text">3.2 设置语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-设置菜单"><span class="nav-text">3.3 设置菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-禁用RSS"><span class="nav-text">3.4 禁用RSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-分类和标签页禁用评论"><span class="nav-text">3.5 分类和标签页禁用评论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-代码自动高亮"><span class="nav-text">3.6 代码自动高亮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-禁用文章目录自动编号"><span class="nav-text">3.7 禁用文章目录自动编号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-设置页面文章的篇数"><span class="nav-text">3.8 设置页面文章的篇数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-文章置顶"><span class="nav-text">3.9 文章置顶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-配置Algolia搜索功能"><span class="nav-text">3.10 配置Algolia搜索功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-11-自定义页面样式"><span class="nav-text">3.11 自定义页面样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-12-自定义多说评论样式"><span class="nav-text">3.12 自定义多说评论样式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-遇到的问题"><span class="nav-text">4. 遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Algolia搜索跳转时显示undefined"><span class="nav-text">4.1 Algolia搜索跳转时显示undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Algolia搜索第二次点击时出错"><span class="nav-text">4.2 Algolia搜索第二次点击时出错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-重装插件时提示权限错误"><span class="nav-text">4.3 重装插件时提示权限错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-参考链接"><span class="nav-text">5. 参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sam Wong</span>
+  
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"samwong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Pg7bNsCbm5M8cCpVEdQH1iss-gzGzoHsz", "0opPvPSL16Auyc8J4KG8INHI");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,1301 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,Ubuntu,CDH," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="【声明】欢迎转载，转载本文请注明作者和出处https://www.zybuluo.com/ncepuwanghui/note/474966
+
+【版本控制】
+  12345@Title          Ubuntu Server 14.04 安装部署 CDH5.7.2@Version        v1.0@Timestamp      2016-08-20 11:01@Author">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu Server 14.04 安装部署 CDH5.7.2">
+<meta property="og:url" content="http://samwong.im/2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/index.html">
+<meta property="og:site_name" content="Sam Wong">
+<meta property="og:description" content="【声明】欢迎转载，转载本文请注明作者和出处https://www.zybuluo.com/ncepuwanghui/note/474966
+
+【版本控制】
+  12345@Title          Ubuntu Server 14.04 安装部署 CDH5.7.2@Version        v1.0@Timestamp      2016-08-20 11:01@Author">
+<meta property="og:image" content="http://7xixm6.com1.z0.glb.clouddn.com/image/note/cloud_computing/specify_hosts_for_cdh_cluster.png">
+<meta property="og:updated_time" content="2016-12-31T07:22:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu Server 14.04 安装部署 CDH5.7.2">
+<meta name="twitter:description" content="【声明】欢迎转载，转载本文请注明作者和出处https://www.zybuluo.com/ncepuwanghui/note/474966
+
+【版本控制】
+  12345@Title          Ubuntu Server 14.04 安装部署 CDH5.7.2@Version        v1.0@Timestamp      2016-08-20 11:01@Author">
+<meta name="twitter:image" content="http://7xixm6.com1.z0.glb.clouddn.com/image/note/cloud_computing/specify_hosts_for_cdh_cluster.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '1045696',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'PMBAGVNUG9',
+      apiKey: '63dcab934ccb229b0957e2530079edb4',
+      indexName: 'samwong',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://samwong.im/2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/"/>
+
+
+
+
+
+  <title> Ubuntu Server 14.04 安装部署 CDH5.7.2 | Sam Wong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f404ff6ce8f5c24e63d26614d8f843b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Sam Wong</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          <li class="menu-item menu-item-home">
+            <a href="/" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              
+              首页
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              
+              归档
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              
+              关于
+            </a>
+          </li>
+        
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://samwong.im/2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Sam Wong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Sam Wong">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Sam Wong" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Ubuntu Server 14.04 安装部署 CDH5.7.2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-20T11:01:35+08:00">
+                2016-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/云计算/" itemprop="url" rel="index">
+                    <span itemprop="name">云计算</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/" class="leancloud_visitors" data-flag-title="Ubuntu Server 14.04 安装部署 CDH5.7.2">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><p><strong>【声明】</strong><br>欢迎转载，转载本文请注明作者和出处<br><a href="https://www.zybuluo.com/ncepuwanghui/note/474966" target="_blank" rel="external">https://www.zybuluo.com/ncepuwanghui/note/474966</a></p>
+</li>
+<li><p><strong>【版本控制】</strong></p>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@Title</span>          Ubuntu Server <span class="number">14.04</span> 安装部署 CDH5.<span class="number">7.2</span></div><div class="line"><span class="variable">@Version</span>        v1.<span class="number">0</span></div><div class="line"><span class="variable">@Timestamp</span>      <span class="number">2016</span>-<span class="number">08</span>-<span class="number">20</span> <span class="number">11</span>:<span class="number">01</span></div><div class="line"><span class="variable">@Author</span>         Sam Wong</div><div class="line"><span class="variable">@Mail</span>           ncepuwanghui<span class="variable">@foxmail</span>.com</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>【系统环境】</strong><br>① 物理主机</p>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@Server</span>         Wave P8000</div><div class="line"><span class="variable">@CPU</span>            Intel Xeon CPU E5-<span class="number">2620</span> v3 <span class="number">2.40</span>GHz * <span class="number">2</span></div><div class="line"><span class="variable">@Memory</span>         <span class="number">16</span>GB * <span class="number">8</span></div><div class="line"><span class="variable">@Storage</span>        SAS <span class="number">300</span>GB * <span class="number">3</span></div><div class="line"><span class="variable">@Network</span>        Gigabit Ethernet Card * <span class="number">6</span></div><div class="line"><span class="variable">@OS</span>             Windows Server <span class="number">2012</span> R2 DataCenter</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 集群环境<br>    <figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@OS</span>             Ubuntu Server <span class="number">14.04</span>.<span class="number">5</span> LTS (<span class="number">64</span>bit)</div><div class="line"><span class="variable">@JDK</span>            JDK <span class="number">1.7</span>.<span class="number">0</span>_67</div><div class="line"><span class="variable">@CDH</span>            CDH <span class="number">5.7</span>.<span class="number">2</span></div><div class="line"><span class="variable">@Hadoop</span>         Hadoop <span class="number">2.6</span>.<span class="number">0</span></div><div class="line"><span class="variable">@Spark</span>          Spark <span class="number">1.6</span>.<span class="number">0</span></div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="1-节点系统安装配置"><a href="#1-节点系统安装配置" class="headerlink" title="1. 节点系统安装配置"></a>1. 节点系统安装配置</h2><h3 id="1-1-集群节点规划"><a href="#1-1-集群节点规划" class="headerlink" title="1.1 集群节点规划"></a>1.1 集群节点规划</h3><ul>
+<li><p>硬件配置<br>共5个节点：1个master节点，4个slave节点，硬件配置如下：<br>  |节点|CPU|内存|存储|<br>  |:-:|:-:|:-:|:-:|<br>  |master|4|24GB|100GB|<br>  |slave|4|16GB|100GB|</p>
+</li>
+<li><p>网络配置<br>  |节点|eth0|<br>  |:-:|:-:|<br>  |master|192.168.199.100|<br>  |slave1|192.168.199.101|<br>  |slave2|192.168.199.102|<br>  |slave3|192.168.199.103|<br>  |slave4|192.168.199.104|<br>  |netmask|255.255.255.0|<br>  |gateway|192.168.199.1|</p>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>主机用户名和密码<br>  |User|Password|<br>  |:-:|:-:|<br>  |ubuntu|ubuntu|<br>  |root|osroot|</p>
+</li>
+<li><p>服务用户名和密码<br>  |Database|User|Password|Remark|<br>  |:-:|:-:|:-:|:-:|<br>  ||root|root_password|MariaDB|<br>  ||postgres|postgres_password|PostgreSQL|<br>  |scm|scm|scm_password|Cloudera Manager Server|<br>  |hue|hue|hue_password|Apache Hadoop UI|<br>  |oozie|oozie|oozie_password|Oozie Server|<br>  |sqoop|sqoop|sqoop_password|Sqoop Server|<br>  |amon|amon|amon_password|Activity Monitor|<br>  |metastore|hive|hive_password|Hive Metastore Server|<br>  |sentry|sentry|sentry_password|Sentry Server|<br>  ||hueadmin|admin_password|Hue Web UI Login|</p>
+</li>
+</ul>
+<h3 id="1-2-节点系统安装"><a href="#1-2-节点系统安装" class="headerlink" title="1.2 节点系统安装"></a>1.2 节点系统安装</h3><p>在VMware中创建虚拟机，安装Ubuntu Server 14.04.5 LTS</p>
+<ul>
+<li>创建虚拟机，设置CPU核心数、内存大小、存储大小。</li>
+<li>添加虚拟网卡，采用桥接方式，桥接到物理网络。</li>
+<li>加载Ubuntu Server 14.04.5 LTS系统镜像</li>
+<li>启动系统，选择时区、语言，设置主机名和用户名、密码。</li>
+<li><code>Partition disks</code>配置步骤：<br>① 单独设置分区<code>/dev/sda1</code>，大小<code>200MB</code>，用于挂载<code>/boot</code><br>选择手动配置–&gt;选择硬盘–&gt;创建新的分区表–&gt;选择空闲空间–&gt;新建分区–&gt;设置大小200MB–&gt;选择主分区–&gt;选择开始位置–&gt;设置文件系统格式<code>Ext4</code>–&gt;设置挂载点<code>/boot</code>–&gt;设置分区。<br>② 设置LVM，方便扩展存储，挂载<code>/</code>和<code>swap</code><br>配置逻辑卷LVM–&gt;将修改写入磁盘并配置LVM–&gt;新建卷组–&gt;卷组名称：<code>vg_system</code>–&gt;按空格键选中剩余空闲空间<code>/dev/sda</code>–&gt;将修改写入磁盘并配置LVM–&gt;新建逻辑卷–&gt;选择卷组<code>vg_system</code>–&gt;逻辑卷名：lv_root–&gt;设置逻辑卷大小：91GB–&gt;新建逻辑卷–&gt;选择卷组<code>vg_system</code>–&gt;逻辑卷名：<code>lv_swap</code>–&gt;设置逻辑卷大小为剩余空间–&gt;完成。<br>③ 分别对每一个逻辑卷进行配置<br>磁盘格式：lv_root选择ext4，lv_swap选择swap area。<br>挂载点：lv_root选择”/“。<br>最后选择完成分区并将更改写入磁盘，点击确定即可。</li>
+<li>选择服务器默认安装软件包<br>空格键选择OpenSSH Server，方便使用SSH传输文件。</li>
+<li>安装Grub。<br><strong>按照上述步骤，创建其他节点服务器并安装Ubuntu Server 14.04.5 LTS系统</strong></li>
+</ul>
+<h3 id="1-3-节点系统基本环境配置"><a href="#1-3-节点系统基本环境配置" class="headerlink" title="1.3 节点系统基本环境配置"></a>1.3 节点系统基本环境配置</h3><ul>
+<li><p>启用root用户，设置root密码</p>
+  <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo passwd root</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>设置静态IP/DNS<br><strong>注：以<code>master</code>节点为例</strong><br>① 修改文件<code>sudo vi /etc/network/interfaces</code>，将默认生成的（下面内容可能没有，可能不一样，配置时视自己情况而定）：</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> eth0</div><div class="line">iface eth0 inet dhcp</div></pre></td></tr></table></figure>
+<p>  改为：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">auto</span> <span class="selector-tag">eth0</span></div><div class="line"><span class="selector-tag">iface</span> <span class="selector-tag">eth0</span> <span class="selector-tag">inet</span> <span class="selector-tag">static</span></div><div class="line"><span class="selector-tag">address</span> 192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.100</span> <span class="selector-id">#IP</span>地址</div><div class="line"><span class="selector-tag">netmask</span> 255<span class="selector-class">.255</span><span class="selector-class">.255</span><span class="selector-class">.0</span> #子网掩码</div><div class="line"><span class="selector-tag">gateway</span> 192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.1</span> #网关</div><div class="line"><span class="selector-tag">dns-nameserver</span> 192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.1</span> <span class="selector-id">#DNS</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 重启网卡，使配置生效：<br>    <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo service networking restart</span></div></pre></td></tr></table></figure></p>
+<p>注：若找不到上述命令或重启无效可尝试下面命令：<br>    <figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo</span> ifdown eth0</div><div class="line">sudo ifdown eth1</div><div class="line">sudo ifup eth0</div><div class="line">sudo ifup eth1</div></pre></td></tr></table></figure></p>
+<p>注：若提示<code>ifdown: interface eth0 not configured</code>，可换下面命令尝试：<br>    <figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo ifconfig eth0 <span class="meta">down</span></div><div class="line">sudo ifconfig eth1 <span class="meta">down</span></div><div class="line">sudo ifconfig eth0 <span class="meta">up</span></div><div class="line">sudo ifconfig eth1 <span class="meta">up</span></div></pre></td></tr></table></figure></p>
+<p> ③ 运行<code>ifconfig -a</code>查看网络配置信息。<br> ④ 通过<code>ping -c2 www.baidu.com</code>测试能否正常访问外网。若不能，可<code>sudo reboot</code>重启节点试试。<br>⑤ 配置完成后，可在其他主机，通过Xshell连接<code>master</code>节点。<br><strong>注</strong>：若XShell连接失败，提示<code>Xshell no matching outgoing encryption</code>，可升级Xshell版本,在链接的属性(SSH–&gt;安全性)的加密算法列表中选择aes256-ctr，mac加密列表中选择hmac-sha2-256，保存即可。<br> <strong>注：<code>slave</code>节点配置方法类似</strong></p>
+<ul>
+<li><p>关闭防火墙</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ufw <span class="built_in">disable</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>配置<code>hosts</code>文件<br><strong>以<code>master</code>节点为例</strong><br>要求所有的节点主机之间都是通过host互信的，编辑所有节点主机的<code>/etc/hosts</code>文件，配置完成后在每台主机上ping通其他主机名。<br>① 执行<code>sudo vi /etc/hosts</code>，添加如下内容</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.100</span>	<span class="selector-tag">master</span></div><div class="line">192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.101</span>	<span class="selector-tag">slave1</span></div><div class="line">192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.102</span>	<span class="selector-tag">slave2</span></div><div class="line">192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.103</span>	<span class="selector-tag">slave3</span></div><div class="line">192<span class="selector-class">.168</span><span class="selector-class">.199</span><span class="selector-class">.104</span>	<span class="selector-tag">slave4</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 注释掉除<code>127.0.0.1</code>之外的环回地址项，如下：<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#127</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-class">.1</span>      <span class="selector-tag">master</span>`</div></pre></td></tr></table></figure></p>
+<p><strong>注：<code>slave</code>节点配置方法类似</strong></p>
+<ul>
+<li><p>服务器时区设置<br>① 执行<code>sudo tzselect</code>–&gt;选择亚洲（Asia）–&gt;选择中国（China)–&gt;选择北京(Beijing)–&gt;<br>② 复制文件到/etc目录下：<br><code>sudo cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime</code><br><strong>注：</strong>若在系统安装时已设置正确时区，可跳过该步骤。</p>
+</li>
+<li><p>设置区域语言<br>安装<code>en_US.UTF-8</code>：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">locale-gen</span> <span class="selector-tag">en_US</span><span class="selector-class">.UTF-8</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>修改配置文件<code>sudo vi /etc/default/locale</code>如下：<br>    <figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attr">LANG</span>=<span class="string">"en_US.UTF-8"</span></div><div class="line"><span class="attr">LANGUAGE</span>=<span class="string">"en_US:en"</span></div><div class="line"><span class="attr">LC_ALL</span>=<span class="string">"en_US.UTF-8"</span></div></pre></td></tr></table></figure></p>
+<p>重新配置区域：<br>    <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo dpkg-reconfigure locales</span></div></pre></td></tr></table></figure></p>
+<p>注销或重启电脑，执行<code>locale</code>查看是否修改成功。</p>
+<ul>
+<li>配置ubuntu的更新源<br>① 备份源列表  <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp <span class="regexp">/etc/</span>apt<span class="regexp">/sources.list /</span>etc<span class="regexp">/apt/</span>sources.list_backup</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 选择一个更新源，修改配置文件<code>sudo vi /etc/apt/sources.list</code>，添加新的源，国内推荐使用阿里源：<br>    <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">deb http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty main restricted universe multiverse</div><div class="line">deb http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-security main restricted universe multiverse</div><div class="line">deb http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse</div><div class="line">deb http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse</div><div class="line">deb http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse</div><div class="line">deb-src http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty main restricted universe multiverse</div><div class="line">deb-src http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-security main restricted universe multiverse</div><div class="line">deb-src http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-updates main restricted universe multiverse</div><div class="line">deb-src http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-proposed main restricted universe multiverse</div><div class="line">deb-src http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span> trusty-backports main restricted universe multiverse</div></pre></td></tr></table></figure></p>
+<ul>
+<li>更新系统<br>① 更新系统  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo apt <span class="keyword">update</span></div><div class="line">sudo apt <span class="keyword">upgrade</span></div><div class="line">sudo apt dist-<span class="keyword">upgrade</span></div><div class="line">sudo apt autoremove</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>可能遇到的问题：</strong><br>Ubuntu系统/boot容量不足引起的无法更新系统<br>解决方法：<br>查看<code>/boot</code>分区容量<code>df -h /boot</code>；查看当前使用内核版本号<code>uname -a</code>；删除旧内核，输入<code>sudo apt-get remove linux-image-</code>，接着按两下tab键，将显示所有的内核版本，把目前使用的版本之前的版本全部删除。最后执行<br>    <figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo <span class="keyword">update</span>-grub</div><div class="line">sudo grub-mkconfig -o /<span class="keyword">boot</span>/grub/grub.cfg</div></pre></td></tr></table></figure></p>
+<p>② 查看系统发行版本和内核版本<br>    <figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ubuntu<span class="variable">@master</span><span class="symbol">:~</span><span class="variable">$ </span>sudo lsb_release -a</div><div class="line">No LSB modules are available.</div><div class="line">Distributor <span class="symbol">ID:</span>	Ubuntu</div><div class="line"><span class="symbol">Description:</span>	Ubuntu <span class="number">14.04</span>.<span class="number">5</span> LTS</div><div class="line"><span class="symbol">Release:</span>	<span class="number">14.04</span></div><div class="line"><span class="symbol">Codename:</span>	trusty</div><div class="line">ubuntu<span class="variable">@master</span><span class="symbol">:~</span><span class="variable">$ </span>uname -srpi</div><div class="line">Linux <span class="number">4.4</span>.<span class="number">0</span>-<span class="number">36</span>-generic x86_64 x86_64</div></pre></td></tr></table></figure></p>
+<ul>
+<li>免密码SSH登录<br>① 在每个节点上生成密钥对：  <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ssh-keygen -t rsa</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 将每个节点（包括<code>master</code>和<code>slave</code>）上的公钥复制到<code>master</code>节点，执行如下命令，输入<code>master</code>登录密码，完成复制：<br>    <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id -<span class="selector-tag">i</span> ~/.ssh/id_rsa<span class="selector-class">.pub</span> master</div></pre></td></tr></table></figure></p>
+<p>③ 查看所有节点公钥是否已经添加到了<code>master</code>节点，在<code>master</code>节点执行：<br>    <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~<span class="regexp">/.ssh/</span>authorized_keys</div></pre></td></tr></table></figure></p>
+<p>④ 把<code>master</code>节点的<code>authorized_keys</code>发送到所有<code>slave</code>节点，在<code>master</code>节点执行：<br>    <figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">scp ~<span class="regexp">/.ssh/authorized</span>_keys ubuntu<span class="variable">@slave1</span><span class="symbol">:/home/ubuntu/</span>.ssh/</div><div class="line">scp ~<span class="regexp">/.ssh/authorized</span>_keys ubuntu<span class="variable">@slave2</span><span class="symbol">:/home/ubuntu/</span>.ssh/</div><div class="line">scp ~<span class="regexp">/.ssh/authorized</span>_keys ubuntu<span class="variable">@slave3</span><span class="symbol">:/home/ubuntu/</span>.ssh/</div><div class="line">scp ~<span class="regexp">/.ssh/authorized</span>_keys ubuntu<span class="variable">@slave4</span><span class="symbol">:/home/ubuntu/</span>.ssh/</div></pre></td></tr></table></figure></p>
+<p>⑤ 在所有节点上修改ssh配置文件使root用户也能免密码登录：<br>修改配置文件<code>sudo vi /etc/ssh/sshd_config</code><br>    <figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">PermitRootLogin</span> <span class="literal">yes</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>统一时间源，安装NTP服务<br>① 在<code>master</code>节点上安装NTP服务：<code>sudo apt-get install chrony</code>。<br>重启NTP使配置生效：<code>sudo service chrony restart</code><br><strong>注：</strong>确保网络时间服务器IP地址可以被DNS解析，如果不能，则在<code>/etc/hosts</code>文件中手工加入。<br>② 在所有<code>slave</code>节点上安装NTP服务：<code>sudo apt-get install chrony</code>。<br>修改配置文件<code>sudo vi /etc/chrony/chrony.conf</code>，删除全部默认设置，只添加如下内容：</p>
+  <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">server <span class="keyword">master</span> <span class="title">iburst</span></div></pre></td></tr></table></figure>
+<p>重启NTP服务：<code>sudo service chrony restart</code><br>③ 验证是否配置正确：</p>
+  <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">chronyc sources -v</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-安装配置CDH"><a href="#2-安装配置CDH" class="headerlink" title="2. 安装配置CDH"></a>2. 安装配置CDH</h2><ul>
+<li><p><code>Cloudera</code>官方给出了三种安装方法：</p>
+<blockquote>
+<p>Path A - Automated Installation by Cloudera Manager (Non-Production Mode)<br>Path B - Installation Using Cloudera Manager Parcels or Packages<br>Path C - Manual Installation Using Cloudera Manager Tarballs</p>
+</blockquote>
+<p>  <strong>注：</strong>本文采用第2种方法，手动安装JDK、MariaDB Database、Cloudera Manager Software Package。</p>
+</li>
+<li><p><code>Cloudera</code>服务组件：<br>①  <strong>Cloudera Express Version</strong></p>
+<blockquote>
+<p>• <strong>Cloudera Manager</strong> - Contains all the information about services you have configured and their role assignments, all configuration history, commands, users, and running processes.<br>• <strong>Oozie Server</strong> - Contains Oozie workflow, coordinator, and bundle data. Can grow very large.<br>• <strong>Sqoop Server</strong> - Contains entities such as the connector, driver, links and jobs. Relatively small.<br>• <strong>Activity Monitor</strong> - Contains information about past activities. In large clusters, this database can grow large. Configuring an Activity Monitor database is only necessary if a MapReduce service is deployed.<br>• <strong>Hive Metastore Server</strong> - Contains Hive metadata. Relatively small.<br>• <strong>Sentry Server</strong> - Contains authorization metadata. Relatively small.</p>
+</blockquote>
+<p>  ② <strong>Cloudera Enterprise Version</strong></p>
+<blockquote>
+<p>• <strong>Reports Manager</strong> - Tracks disk utilization and processing activities over time. Medium-sized.<br>• <strong>Cloudera Navigator Audit Server</strong> - Contains auditing information. In large clusters, this database can grow large.<br>• <strong>Cloudera Navigator Metadata Server</strong> - Contains authorization, policies, and audit report metadata. Relatively small</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-1-Phase-1：安装Oracle-JDK-7"><a href="#2-1-Phase-1：安装Oracle-JDK-7" class="headerlink" title="2.1 Phase 1：安装Oracle JDK 7"></a>2.1 Phase 1：安装Oracle JDK 7</h3><p><strong>在所有节点安装JDK 1.7</strong></p>
+<ul>
+<li><p>配置Cloudera软件仓库<br>Cloudera官方文档提供了两种管理仓库策略：<br>• <code>Standard Cloudera repositories</code><br>• <code>Internally hosted repositories</code></p>
+<p>  本文采用<code>Standard Cloudera repositories</code>，步骤如下：<br>① 在<code>master</code>节点<a href="http://www.cloudera.com/documentation/enterprise/5-7-x/topics/cm_ig_install_path_b.html#id_gzv_zmm_25" target="_blank" rel="external">下载<code>cloudera.list</code></a></p>
+  <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https:<span class="regexp">//</span>archive.cloudera.com<span class="regexp">/cm5/u</span>buntu<span class="regexp">/trusty/</span>amd64<span class="regexp">/cm/</span>cloudera.list?_ga=<span class="number">1.37493987</span>.<span class="number">2113753785.1471598714</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 在<code>master</code>节点新建文件<code>sudo vi /etc/apt/sources.list.d/cloudera-manager.list</code>，复制<code>cloudera.list</code>的内容<br>    <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp ~/cloudera<span class="selector-class">.list</span> /etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager.list</div></pre></td></tr></table></figure></p>
+<p>③ 将<code>cloudera-manager.list</code>分发到所有<code>slave</code>节点：<br>    <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">scp /etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager<span class="selector-class">.list</span> root@slave1:/etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager<span class="selector-class">.list</span></div><div class="line">scp /etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager<span class="selector-class">.list</span> root@slave2:/etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager<span class="selector-class">.list</span></div><div class="line">scp /etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager<span class="selector-class">.list</span> root@slave3:/etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager<span class="selector-class">.list</span></div><div class="line">scp /etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager<span class="selector-class">.list</span> root@slave4:/etc/apt/sources<span class="selector-class">.list</span><span class="selector-class">.d</span>/cloudera-manager.list</div></pre></td></tr></table></figure></p>
+<p>④ 向apt添加cloudera源公钥，在所有节点执行如下命令：<br>    <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -s http:<span class="regexp">//</span>archive.cloudera.com<span class="regexp">/cm5/u</span>buntu<span class="regexp">/trusty/</span>amd64<span class="regexp">/cm/</span>archive.key | sudo apt-key add -</div></pre></td></tr></table></figure></p>
+<p>⑤ 在所有节点，更新源<br>    <figure class="highlight q"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></div></pre></td></tr></table></figure></p>
+<p>若更新出错，提示如下：<br>    <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">W:</span> GPG <span class="string">error:</span> <span class="string">http:</span><span class="comment">//archive.cloudera.com trusty-cm5 InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 327574EE02A818DD</span></div></pre></td></tr></table></figure></p>
+<p>可执行如下命令，添加cloudera源的公钥，重新更新源：<br>    <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -s http:<span class="regexp">//</span>archive.cloudera.com<span class="regexp">/cm5/u</span>buntu<span class="regexp">/trusty/</span>amd64<span class="regexp">/cm/</span>archive.key | sudo apt-key add -</div></pre></td></tr></table></figure></p>
+<ul>
+<li>安装JDK1.7<br>CDH要求至少是Oracle JDK7，Ubuntu自带的是OpenJDK，Ubuntu没有自带的Oracle JDK,必须添加外部源才能安装JDK。<br>① 采用Cloudera软件源<br>在上一步配置Cloudera软件源后，可直接执行下面命令安装：  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> <span class="keyword">oracle</span>-j2sdk1<span class="number">.7</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 采用PPP源<br>添加<code>PPA repository</code>到系统,配置PPP源安装：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:webupd8team/java</div><div class="line">sudo apt-get <span class="keyword">update</span></div><div class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">upgrade</span></div><div class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> <span class="keyword">oracle</span>-java7-installer</div><div class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> <span class="keyword">oracle</span>-java7-<span class="keyword">set</span>-<span class="keyword">default</span></div><div class="line"><span class="keyword">java</span> -<span class="keyword">version</span></div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong>若提示如下信息：<br>    <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">sha256sum </span>mismatch <span class="keyword">jdk-7u80-linux-x64.tar.gz </span></div><div class="line"><span class="keyword">Oracle </span><span class="keyword">JDK </span><span class="number">7</span> is NOT <span class="keyword">installed.</span></div></pre></td></tr></table></figure></p>
+<p>可能是jdk软件包没有下载完全，可执行如下命令删除后重新安装：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">purge</span> <span class="keyword">oracle</span>-java7-installer</div></pre></td></tr></table></figure></p>
+<p>③ 手动安装<br>从Oracle官网下载JDK7u80：<a href="http://download.oracle.com/otn/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz" target="_blank" rel="external">jdk-7u80-linux-x64.tar.gz</a>，解压到<code>/usr/java/jdk.1.7.0_80</code><br>    <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /usr/java</div><div class="line">sudo tar -zxvf jdk-<span class="number">7</span>u80-linux-x64<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -C /usr/java</div></pre></td></tr></table></figure></p>
+<p>配置JDK环境变量：<br>在<code>~/.bashrc</code>最后添加：<br>    <figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/java/jdk<span class="number">.1</span><span class="number">.7</span><span class="number">.0</span>_80</div></pre></td></tr></table></figure></p>
+<p>再执行：<br>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> ~/.bashrc</div></pre></td></tr></table></figure></p>
+<h3 id="2-2-Phase-2：安装数据库"><a href="#2-2-Phase-2：安装数据库" class="headerlink" title="2.2 Phase 2：安装数据库"></a>2.2 Phase 2：安装数据库</h3><p><strong>需要安装：MariaDB和PostgreSQL Database</strong></p>
+<ul>
+<li>安装MariaDB<br><strong>注：</strong>只有<code>master</code>节点安装MariaDB  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> mariadb-<span class="keyword">server</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>注：</strong>提示输入root密码时，可直接选择OK，跳过，在后面配置。</p>
+<ul>
+<li>配置和启动MariaDB Server<br>① 停止<code>MariaDB Server</code>  <figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service mysql <span class="built_in">stop</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 备份旧的<code>InnoDB</code>日志文件<code>/var/lib/mysql/ib_logfile0</code>和<code>/var/lib/mysql/ib_logfile1</code><br>    <figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mv /var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span>/<span class="title">ib_logfile0</span> <span class="title">backup_location</span> <span class="comment">#备份位置</span></span></div><div class="line">sudo mv /var/<span class="class"><span class="keyword">lib</span>/<span class="title">mysql</span>/<span class="title">ib_logfile1</span> <span class="title">backup_location</span></span></div></pre></td></tr></table></figure></p>
+<p>③ 新建文件<code>sudo vi /etc/mysql/conf.d/cloudera.cnf</code>，添加如下配置信息：<br>    <figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="section">[mysqld]</span></div><div class="line"><span class="attr">transaction-isolation</span> = READ-COMMITTED</div><div class="line"><span class="comment"># Disabling symbolic-links is recommended to prevent assorted security risks;</span></div><div class="line"><span class="comment"># to do so, uncomment this line:</span></div><div class="line"><span class="comment"># symbolic-links = 0</span></div><div class="line"></div><div class="line"><span class="attr">bind-address</span> = master # master hostname</div><div class="line"><span class="attr">default-storage-engine</span> = innodb</div><div class="line"><span class="attr">collation-server</span> = utf8_general_ci</div><div class="line"><span class="attr">character-set-server</span> = utf8</div><div class="line"></div><div class="line"><span class="attr">key_buffer</span> = <span class="number">16</span>M</div><div class="line"><span class="attr">key_buffer_size</span> = <span class="number">32</span>M</div><div class="line"><span class="attr">max_allowed_packet</span> = <span class="number">32</span>M</div><div class="line"><span class="attr">thread_stack</span> = <span class="number">256</span>K</div><div class="line"><span class="attr">thread_cache_size</span> = <span class="number">64</span></div><div class="line"><span class="attr">query_cache_limit</span> = <span class="number">8</span>M</div><div class="line"><span class="attr">query_cache_size</span> = <span class="number">64</span>M</div><div class="line"><span class="attr">query_cache_type</span> = <span class="number">1</span></div><div class="line"></div><div class="line"><span class="attr">max_connections</span> = <span class="number">550</span></div><div class="line"><span class="comment">#expire_logs_days = 10</span></div><div class="line"><span class="comment">#max_binlog_size = 100M</span></div><div class="line"></div><div class="line"><span class="comment">#log_bin should be on a disk with enough free space. Replace '/var/lib/mysql/mysql_binary_log' with an appropriate path for your system</span></div><div class="line"><span class="comment">#and chown the specified folder to the mysql user.</span></div><div class="line"><span class="attr">log_bin</span>=/var/lib/mysql/mysql_binary_log</div><div class="line"></div><div class="line"><span class="attr">binlog_format</span> = mixed</div><div class="line"></div><div class="line"><span class="attr">read_buffer_size</span> = <span class="number">2</span>M</div><div class="line"><span class="attr">read_rnd_buffer_size</span> = <span class="number">16</span>M</div><div class="line"><span class="attr">sort_buffer_size</span> = <span class="number">8</span>M</div><div class="line"><span class="attr">join_buffer_size</span> = <span class="number">8</span>M</div><div class="line"></div><div class="line"><span class="comment"># InnoDB settings</span></div><div class="line"><span class="attr">innodb_file_per_table</span> = <span class="number">1</span></div><div class="line"><span class="attr">innodb_flush_log_at_trx_commit</span>  = <span class="number">2</span></div><div class="line"><span class="attr">innodb_log_buffer_size</span> = <span class="number">64</span>M</div><div class="line"><span class="attr">innodb_buffer_pool_size</span> = <span class="number">4</span>G</div><div class="line"><span class="attr">innodb_thread_concurrency</span> = <span class="number">8</span></div><div class="line"><span class="attr">innodb_flush_method</span> = O_DIRECT</div><div class="line"><span class="attr">innodb_log_file_size</span> = <span class="number">512</span>M</div><div class="line"><span class="section"></span></div><div class="line">[mysqld_safe]</div><div class="line"><span class="attr">log-error</span>=/var/log/mysqld.log</div><div class="line"><span class="attr">pid-file</span>=/var/run/mysqld/mysqld.pid</div></pre></td></tr></table></figure></p>
+<p>④ 重新启动<code>MariaDB</code>数据库，确保<code>MariaDB</code>开机启动：<br>    <figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo service mysql <span class="built_in">restart</span></div><div class="line">sudo service mysql <span class="built_in">status</span></div><div class="line">netstat -ntlp #查看端口监听情况</div></pre></td></tr></table></figure></p>
+<p>⑤ 设置<code>MariaDB</code>数据库<code>root</code>用户密码：<br>执行<code>sudo /usr/bin/mysql_secure_installation</code>，开启MySQL安全保护措施，根据提示输入<code>MariaDB</code>数据库root用户密码，根据实际需要选择后续操作。<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">$ </div><div class="line">[...]</div><div class="line">Enter current password for root (enter for none):</div><div class="line">OK, successfully used password, moving on...</div><div class="line">[...]</div><div class="line"><span class="keyword">Set</span> root <span class="keyword">password</span>? [Y/n] Y</div><div class="line"><span class="keyword">New</span> <span class="keyword">password</span>:</div><div class="line">Re-enter <span class="keyword">new</span> <span class="keyword">password</span>:</div><div class="line">Remove anonymous <span class="keyword">users</span>? [Y/n] Y</div><div class="line">[...]</div><div class="line"><span class="keyword">Disallow</span> root login remotely? [Y/n] N</div><div class="line">[...]</div><div class="line">Remove <span class="keyword">test</span> <span class="keyword">database</span> <span class="keyword">and</span> <span class="keyword">access</span> <span class="keyword">to</span> it [Y/n] Y</div><div class="line">[...]</div><div class="line">Reload privilege <span class="keyword">tables</span> <span class="keyword">now</span>? [Y/n] Y</div><div class="line">All done!</div></pre></td></tr></table></figure></p>
+<p>⑥ 验证<code>MariaDB</code>是否安装配置正确<br>    <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -<span class="selector-tag">p</span></div><div class="line">mysql -h localhost -uroot -p</div></pre></td></tr></table></figure></p>
+<p>⑦ 授权<code>root</code>可以访问所有数据库：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -proot_password</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">privileges</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> <span class="string">'root'</span>@<span class="string">'%'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'root_password'</span> <span class="keyword">with</span> <span class="keyword">grant</span> <span class="keyword">option</span>;</div><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>安装<code>MariaDB JDBC Driver</code><br><code>Cloudera</code>推荐<code>MariaDB</code>数据库使用<code>MySQL JDBC</code>驱动。</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> libmysql-<span class="keyword">java</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>安装<strong>PostgreSQL Database</strong><br>① 设置区域</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">export LANGUAGE=en_US<span class="selector-class">.UTF-8</span></div><div class="line">export LANG=en_US<span class="selector-class">.UTF-8</span></div><div class="line">export LC_ALL=en_US<span class="selector-class">.UTF-8</span></div><div class="line">sudo locale-gen en_US<span class="selector-class">.UTF-8</span></div><div class="line">sudo dpkg-reconfigure locales</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>注：</strong>上述方法好像无效，安装数据库时，还是原来系统区域语言。<br>② 安装<strong>PostgreSQL</strong>软件包<br>    <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install postgresql</div></pre></td></tr></table></figure></p>
+<p>③ 配置并启动<strong>PostgreSQL Server</strong><br><strong>注：</strong>默认第一次启动PostgreSQL会自动初始化，有的版本若第一次启动不进行初始化，可显示初始化：<br>    <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo service postgresql initdb</span></div></pre></td></tr></table></figure></p>
+<p>修改配置文件<code>sudo vi /etc/postgresql/9.3/main/pg_hba.conf</code>，启用<strong>MD5</strong>认证，将行<br>    <figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">host all all <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>/<span class="number">32</span> md5</div></pre></td></tr></table></figure></p>
+<p>修改为：<br>    <figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">host all all <span class="number">192.168</span><span class="number">.199</span><span class="number">.100</span>/<span class="number">32</span> md5 <span class="comment">//指定主机IP</span></div></pre></td></tr></table></figure></p>
+<p>或：<br>    <figure class="highlight q"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">host <span class="built_in">all</span> <span class="built_in">all</span> master <span class="built_in">md5</span> <span class="comment">//指定主机名</span></div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong>若默认配置文件中存在行<code>host all all 127.0.0.1/32 ident</code>，则需确保行<code>host all all 192.168.199.100/32 md5</code>在其之前。<br>修改配置文件<code>sudo vi /etc/postgresql/9.3/main/postgresql.conf</code>，添加：<br>    <figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">listen_addresses</span> = <span class="string">'*'</span></div></pre></td></tr></table></figure></p>
+<p>同时根据需要修改其他默认配置，如对于中小型集群可设置：<br>    <figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">shared_buffers</span> = <span class="number">128</span>MB</div><div class="line"><span class="attr">wal_buffers</span> = <span class="number">8</span>MB</div><div class="line"><span class="attr">checkpoint_segments</span> = <span class="number">16</span></div><div class="line"><span class="attr">checkpoint_completion_target</span> = <span class="number">0.9</span></div></pre></td></tr></table></figure></p>
+<p>④ 重启PostgreSQL Database<br>    <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo service postgresql restart</span></div></pre></td></tr></table></figure></p>
+<p>⑤ 设置PostgresSQL默认用户<code>postgres</code>登录密码<br>   <figure class="highlight livescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo su - postgres</div><div class="line">psql</div><div class="line"><span class="string">\password</span> postgres</div><div class="line"><span class="string">\q</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-3-Phase-3：安装Cloudera-Manager-Server"><a href="#2-3-Phase-3：安装Cloudera-Manager-Server" class="headerlink" title="2.3 Phase 3：安装Cloudera Manager Server"></a>2.3 Phase 3：安装Cloudera Manager Server</h3><ul>
+<li><p>安装<code>Cloudera Manager Server</code>软件包<br>在<code>master</code>节点上执行：</p>
+  <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install </span><span class="keyword">cloudera-manager-daemons </span><span class="keyword">cloudera-manager-server</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>创建<code>Cloudera Manager Server</code>数据库<code>scm</code></p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div><div class="line"><span class="keyword">create</span> <span class="keyword">database</span> scm <span class="keyword">DEFAULT</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8;</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> scm.* <span class="keyword">TO</span> <span class="string">'scm'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'scm_password'</span>;</div><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置启动Cloudera Manager Server</p>
+  <figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo <span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/cmf/</span>schema/scm_prepare_database.sh mysql scm scm scm_password</div><div class="line">sudo service cloudera-scm-server start</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>若启动报错：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/cloudera-scm-server: line 292: [[: [error] JVM PermGen is <span class="keyword">set</span> <span class="keyword">less</span> <span class="keyword">than</span> <span class="number">256</span>m, CM <span class="keyword">server</span> may run <span class="keyword">out</span> <span class="keyword">of</span> PermGen space. <span class="keyword">Update</span> CMF_JAVA_OPTS <span class="keyword">in</span> /etc/<span class="keyword">default</span>/cloudera-scm-<span class="keyword">server</span> <span class="keyword">to</span> fix this.: syntax <span class="keyword">error</span>: operand expected (<span class="keyword">error</span> token <span class="keyword">is</span> <span class="string">"[error] JVM PermGen is set less than 256m, CM server may run out of PermGen space. Update CMF_JAVA_OPTS in /etc/default/cloudera-scm-server to fix this."</span>)</div><div class="line">/etc/init.d/cloudera-scm-<span class="keyword">server</span>: line <span class="number">292</span>: [[: [<span class="keyword">error</span>] JVM MaxHeap <span class="keyword">is</span> <span class="keyword">set</span> <span class="keyword">less</span> <span class="keyword">than</span> <span class="number">2</span>G, CM <span class="keyword">server</span> may run <span class="keyword">out</span> <span class="keyword">of</span> <span class="keyword">Heap</span> space. <span class="keyword">Update</span> CMF_JAVA_OPTS <span class="keyword">in</span> /etc/<span class="keyword">default</span>/cloudera-scm-<span class="keyword">server</span> <span class="keyword">to</span> fix this.: syntax <span class="keyword">error</span>: operand expected (<span class="keyword">error</span> token <span class="keyword">is</span> <span class="string">"[error] JVM MaxHeap is set less than 2G, CM server may run out of Heap space. Update CMF_JAVA_OPTS in /etc/default/cloudera-scm-server to fix this."</span>)</div></pre></td></tr></table></figure></p>
+<p>在<code>/etc/default/cloudera-scm-server</code>中修改配置<code>-Xmx4G -XX:MaxPermSize=256m</code>的大小即可。</p>
+<ul>
+<li>查看日志，验证是否成功启动  <figure class="highlight vbscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail -f /var/<span class="built_in">log</span>/cloudera-scm-<span class="built_in">server</span>/cloudera-scm-<span class="built_in">server</span>.<span class="built_in">log</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2-4-Phase-4：安装Cloudera-Manager-Agents"><a href="#2-4-Phase-4：安装Cloudera-Manager-Agents" class="headerlink" title="2.4 Phase 4：安装Cloudera Manager Agents"></a>2.4 Phase 4：安装Cloudera Manager Agents</h3><ul>
+<li><p>安装<code>Cloudera Manager Agent</code>软件包<br>在所有节点（包括<code>master</code>）上执行：</p>
+  <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install </span><span class="keyword">cloudera-manager-agent </span><span class="keyword">cloudera-manager-daemons</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>配置<code>Cloudera Manager Agent</code><br>在所有节点上，修改配置文件<code>sudo vi /etc/cloudera-scm-agent/config.ini</code>，配置<code>Cloudera Manager Server</code>的主机和端口：</p>
+  <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">server_host=</span><span class="keyword">master</span></div><div class="line"><span class="title">server_port</span>=<span class="number">7182</span> <span class="comment">#默认端口即可</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>启动<code>Cloudera Manager Agent</code></p>
+  <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service cloudera-scm-agent <span class="literal">start</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2-5-Phase-5：安装CDH和管理服务软件"><a href="#2-5-Phase-5：安装CDH和管理服务软件" class="headerlink" title="2.5 Phase 5：安装CDH和管理服务软件"></a>2.5 Phase 5：安装CDH和管理服务软件</h3><ul>
+<li><p>登录<code>Cloudera Manager Admin Console</code><br>URL：<a href="http://192.168.199.100:7180" target="_blank" rel="external">http://192.168.199.100:7180</a> (<a href="http://master:7180" target="_blank" rel="external">http://master:7180</a>)<br>用户名：<code>admin</code><br>密码：<code>admin</code><br>选择<code>Cloudera Manager Edition</code>：<code>Cloudera Express</code></p>
+</li>
+<li><p>为CDH集群安装指定主机<br>前面已经启动<code>Cloudera Manager Server &amp; Agent</code>，若所有配置正确，在<code>已经管理的主机</code>中应该可以看到所有主机。勾选所有主机，点击“继续”，进入<code>Cluster Installation Select Repository</code>页。<br><strong>注：</strong>若没有看到主机，可查看<code>Cloudera Manager Agent</code>服务是否正常启动，或者指定IP或主机名匹配模式进行搜索。<br><img src="http://7xixm6.com1.z0.glb.clouddn.com/image/note/cloud_computing/specify_hosts_for_cdh_cluster.png" alt="此处输入图片的描述"></p>
+</li>
+<li><p>选择软件安装类型并安装软件<br>① 推荐采用<code>Parcels</code>安装类型。<br>② 点击“更多选项”，可以配置<code>Parcel目录</code>（修改后需重启所有主机Cloudera Manager Agent服务）、<code>本地Parcels库路径</code>和<code>远程Parcels库路径</code>。<br>③ 删除系统默认的远程Parcels库路径，只添加一条远程Parcels库路径：<code>https://archive.cloudera.com/cdh5/parcels/5.7.2/</code>，安装<code>CDH5.7.2</code><br>④ CDH版本选择<code>CDH-5.7.2-1.cdh5.7.2.p0.18</code>，点击“继续”，进入<code>Installing Selected Parcels</code>页，开始安装所选软件包。<br><strong>注：</strong>由于前面手动安装了JDK，所以不会弹出<code>Install Oracle Java SE Development Kit (JDK)</code>页，直接进入<code>Installing Selected Parcels</code>页。<br>⑤ 完成后，CDH5.7.2软件包将下载分发到各节点。</p>
+</li>
+<li><p>检查主机正确性<br>点击“主机”–&gt;“所有主机”–&gt;“检查所有主机”（右上角）–&gt;“查看检查结果”，确认所有项都通过检查，没有警告和错误。若出现如下警告：<br>① <code>Cloudera 建议将/proc/sys/vm/swappiness 设置为 0。当前设置为 30。</code><br>在所有节点主机上，修改配置文件<code>sudo vi /etc/sysctl.conf</code>，设置<code>vm.swappiness = 0</code>，最后执行<code>sudo sysctl -p</code>。<br>② <code>已启用“透明大页面”，它可能会导致重大的性能问题。</code></p>
+  <figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">echo never &gt; <span class="meta-keyword">/sys/</span>kernel<span class="meta-keyword">/mm/</span>transparent_hugepage/enabled</div><div class="line">echo never &gt; <span class="meta-keyword">/sys/</span>kernel<span class="meta-keyword">/mm/</span>transparent_hugepage/defrag</div><div class="line">sudo vi <span class="meta-keyword">/etc/</span>rc.local</div><div class="line">echo never &gt;<span class="meta-keyword">/sys/</span>kernel<span class="meta-keyword">/mm/</span>transparent_hugepage/enabled</div><div class="line">echo never &gt;<span class="meta-keyword">/sys/</span>kernel<span class="meta-keyword">/mm/</span>transparent_hugepage/defrag</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>完成以上步骤之后，就可以进行集群配置了。</p>
+<h3 id="2-6-Phase-6：创建配置启动CDH和相关服务"><a href="#2-6-Phase-6：创建配置启动CDH和相关服务" class="headerlink" title="2.6 Phase 6：创建配置启动CDH和相关服务"></a>2.6 Phase 6：创建配置启动CDH和相关服务</h3><ul>
+<li><p>添加服务<strong>Cloudera Management Service</strong><br>点击“集群”–&gt;选择一个“Cluster 1”–&gt;“添加Cloudera管理服务”（右上角）–&gt;选择默认配置安装。<br><strong>注：</strong>若首页显示<code>Unable to issue query: could not connect to the Host Monitor</code>，则是因为没有安装<code>Cloudera Management Service</code>。</p>
+</li>
+<li><p>添加<strong>Activity Monitor</strong>服务<br>① 创建<code>Activity Monitor</code>服务数据库<code>amon</code></p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div><div class="line"><span class="keyword">create</span> <span class="keyword">database</span> amon <span class="keyword">DEFAULT</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8;</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> amon.* <span class="keyword">TO</span> <span class="string">'amon'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'amon_password'</span>;</div><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 配置过程需指定数据库<code>amon</code>及用户<code>amon</code>。</p>
+<ul>
+<li>添加<strong>Core Hadoop</strong>服务<br><strong>注：选择合适的主机分配策略</strong><br>① <strong>HDFS</strong><br>若<code>Namenode</code>提示一直处于元数据升级中：  <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">Concerning :</span> NameNode <span class="string">summary:</span> master (<span class="string">Availability:</span> Active, <span class="string">Health:</span> Concerning). This health test reflects the health of the active NameNode.</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可在<strong>Actions</strong>中手动执行<strong>Finalize Metadata Upgrade</strong>。<br>② <strong>YARN (MR2 Included)</strong><br>③ <strong>ZooKeeper</strong><br>④ <strong>Oozie</strong><br>创建<code>Oozie</code>服务数据库：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -p</div><div class="line"><span class="keyword">create</span> <span class="keyword">database</span> oozie <span class="keyword">DEFAULT</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8;</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> oozie.* <span class="keyword">TO</span> <span class="string">'oozie'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'oozie_password'</span>;</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> oozie.* <span class="keyword">TO</span> <span class="string">'oozie'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'oozie_password'</span>;</div><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure></p>
+<p>复制MySQL JDBC JAVA驱动<br>    <figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp /usr/share/java/mysql-connector-java-<span class="number">5.1</span>.<span class="number">28</span>.jar /var/<span class="class"><span class="keyword">lib</span>/<span class="title">oozie</span></span></div></pre></td></tr></table></figure></p>
+<p>配置过程需指定数据库<code>oozie</code>及用户<code>oozie</code>。<br>⑤ <strong>Hive</strong><br>创建<code>Hive Metadata</code>服务数据库：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -p</div><div class="line"><span class="keyword">create</span> <span class="keyword">database</span> metastore <span class="keyword">DEFAULT</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8;</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> metastore.* <span class="keyword">TO</span> <span class="string">'hive'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'hive_password'</span>;</div><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure></p>
+<p>配置过程需指定数据库<code>metastore</code>及用户<code>hive</code>。<br>⑥ <strong>Hue</strong><br>添加服务<code>Hue</code>，然后配置<code>Hue Server</code>使用<code>MariaDB</code>数据库。<br>详见：<a href="http://www.cloudera.com/documentation/enterprise/5-7-x/topics/install_cm_mariadb.html#id_ygh_4wt_g5" target="_blank" rel="external">Configuring the Hue Server to Store Data in MariaDB</a><br>创建<code>Hue Server</code>服务数据库：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">database</span> hue <span class="keyword">DEFAULT</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8;</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> hue.* <span class="keyword">TO</span> <span class="string">'hue'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'hue_password'</span>;</div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong>在执行完<code>Actions &gt; Synchronize Database</code>后，官方指南略有差别，登录时需要指定主机名，然后选择<code>hue</code>数据库，如下：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql -h hostname -uhue -p</div><div class="line"><span class="keyword">use</span> hue;</div><div class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> auth_permission;</div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> auth_permission <span class="keyword">DROP</span> FOREIGN <span class="keyword">KEY</span> content_type_id_refs_id_XXXXXX; //仅针对InnoDB</div><div class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> hue.django_content_type;</div></pre></td></tr></table></figure></p>
+<p>在<code>Load Database</code>后，执行：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> auth_permission <span class="keyword">ADD</span> FOREIGN <span class="keyword">KEY</span> (content_type_id) <span class="keyword">REFERENCES</span> django_content_type (<span class="keyword">id</span>);</div></pre></td></tr></table></figure></p>
+<p><strong>特别提示：</strong>本文<code>Hue</code>该部分只列出了配置的关键步骤，详细步骤请查看官方指南。</p>
+<ul>
+<li><p><strong>HBase</strong></p>
+</li>
+<li><p><strong>Impala</strong></p>
+</li>
+<li><p><strong>Cloudera Search：Solr</strong></p>
+</li>
+<li><p><strong>Spark</strong></p>
+</li>
+<li><p><strong>Key-Value Store Indexer</strong></p>
+</li>
+<li><p><strong>Sqoop 2</strong><br>① 创建<code>Sqoop</code>服务数据库和用户：</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    sudo su - postgres</div><div class="line">    psql -U postgres</div><div class="line">    <span class="keyword">CREATE</span> <span class="keyword">ROLE</span> sqoop LOGIN ENCRYPTED <span class="keyword">PASSWORD</span> <span class="string">'sqoop_password'</span> NOSUPERUSER INHERIT CREATEDB NOCREATEROLE;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="string">"sqoop"</span> <span class="keyword">WITH</span> OWNER = sqoop  <span class="keyword">ENCODING</span> = <span class="string">'UTF8'</span> <span class="keyword">TABLESPACE</span> = pg_default LC_COLLATE = <span class="string">'en_US.UTF8'</span> LC_CTYPE = <span class="string">'en_US.UTF8'</span> <span class="keyword">CONNECTION</span> <span class="keyword">LIMIT</span> = <span class="number">-1</span>;</div><div class="line">    \q</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>注：</strong>创建数据库若提示错误：<br>    <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ERROR:  <span class="built_in">new</span> collation (en_US.UTF8) is incompatible <span class="keyword">with</span> <span class="keyword">the</span> collation <span class="keyword">of</span> <span class="keyword">the</span> template database (en_HK.UTF<span class="number">-8</span>)</div><div class="line">HINT:  Use <span class="keyword">the</span> same collation <span class="keyword">as</span> <span class="keyword">in</span> <span class="keyword">the</span> template database, <span class="keyword">or</span> use template0 <span class="keyword">as</span> template.</div></pre></td></tr></table></figure></p>
+<p>可执行如下命令：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="string">"sqoop"</span> <span class="keyword">WITH</span> OWNER = sqoop  <span class="keyword">ENCODING</span> = <span class="string">'UTF8'</span> <span class="keyword">TABLESPACE</span> = pg_default LC_COLLATE = <span class="string">'en_US.UTF8'</span> LC_CTYPE = <span class="string">'en_US.UTF8'</span> <span class="keyword">CONNECTION</span> <span class="keyword">LIMIT</span> = <span class="number">-1</span> <span class="keyword">TEMPLATE</span> template0;</div></pre></td></tr></table></figure></p>
+<p> ② 为<strong>Sqoop</strong>配置<strong>PostgresSQL Database</strong><br>详见：<a href="http://www.cloudera.com/documentation/enterprise/5-7-x/topics/install_sqoop_ext_db.html#concept_y53_jyf_4r__section_nfp_kzy_pr" target="_blank" rel="external">Configure Sqoop 2 to use PostgreSQL</a><br><strong>注：</strong> Sqoop需要部署在PostgresSQL所在节点，测试发现部署在其他节点会报错。</p>
+<ul>
+<li><strong>Sentry</strong><br>① 创建数据库  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -p</div><div class="line"><span class="keyword">create</span> <span class="keyword">database</span> sentry <span class="keyword">DEFAULT</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8;</div><div class="line"><span class="keyword">grant</span> all <span class="keyword">on</span> sentry.* <span class="keyword">TO</span> <span class="string">'sentry'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'sentry_password'</span>;</div><div class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 在Cloudera Manager中添加<strong>Sentry</strong>服务，选择服务安装节点，若选择除<code>master</code>之外的其他<code>slave</code>节点，则需要在该<code>slave</code>节点上安装<code>MySQL JDBC</code>驱动，否则提示没有<code>MySQL JDBC</code>驱动。如下：<br>    <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> libmysql-<span class="keyword">java</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>Kafka</strong><br>① 在<strong>Parcels Configuration</strong>中配置<strong>Kafka</strong>远程库路径：<code>https://archive.cloudera.com/kafka/parcels/latest/</code>，然后下载、分发、激活<strong>Kafka</strong>软件包。<br>② 在集群配置中，添加<strong>Kafka</strong>服务。<br>若提示，或者错误日志中提示<code>Java Heap</code>空间太小：  <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Missing</span> required value: Destination Broker <span class="keyword">List</span></div><div class="line"><span class="keyword">Missing</span> required value: Source Broker <span class="keyword">List</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可按如下方法配置后重试即可：<br><strong>a.</strong> 填写<code>Source Brokers List</code><br>填写<strong>Kafka Broker</strong>所在节点构成的列表（用逗号分隔），如下（本文在所有节点部署了Kafka Broker）：<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">master</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave1</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave2</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave3</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave4</span><span class="selector-pseudo">:9092</span></div></pre></td></tr></table></figure></p>
+<p><strong>b.</strong> 填写<code>Destination Brokers List</code><br>若添加了<strong>Kafka MirrorMaker</strong>，则可填写其所在节点构成的列表；若未添加<strong>Kafka MirrorMaker</strong>，可填写任意服务器即可，如下：<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">master</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave1</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave2</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave3</span><span class="selector-pseudo">:9092</span>,<span class="selector-tag">slave4</span><span class="selector-pseudo">:9092</span></div></pre></td></tr></table></figure></p>
+<p>或：<br>    <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">example</span><span class="selector-class">.com</span><span class="selector-pseudo">:9092</span></div></pre></td></tr></table></figure></p>
+<p><strong>c.</strong> 修改<strong>Java Heap Size</strong><br>填写上面列表后，点击继续，出错后，Kafka服务未启动。返回集群配置，打卡Kafka服务配置页，查找“Java Heap Size of Broker”项，将对大小从50MB修改为256MB。<br><strong>d.</strong> 配置<strong>Topic Whitelist</strong><br>配置<strong>Topic Whitelist</strong>项为正则表达式：<code>(?!x)x</code>，保存更改。然后添加角色实例，重新配置即可。<br>参考链接：<a href="https://community.cloudera.com/t5/Cloudera-Manager-Installation/adding-a-Kafka-service-failed/td-p/40526" target="_blank" rel="external">adding a Kafka service failed</a></p>
+<blockquote>
+<p>1) Fill in “Source Brokers List” –&gt; “nameOfClouderaKafkaBrokerServer.yourdomain.com:9092”. This is the Server (or Servers) where you configured the Kafka Broker (NOT the MirrorMaker).</p>
+<p>2) Fill in “Destination Brokers List” –&gt; “nameOfRemoteBrokerServer.otherdomain.com:9092”. This is supposed to be a remote Cluster that will receive Topics sent over by your MirrorMaker. If you have one, put in that one. Otherwise just put in another Server in your network, whatever Server.</p>
+<p>Please note that both this Server Names must be FQDN and resolvable by your DNS (or hosts file), otherwise you’ll get other errors. Also the format with the trailing Port Number is mandatory!</p>
+<p>3) Click “Continue”. Service will NOT start (error). Do not navigate away from that screen</p>
+<p>4) Open another Cloudera Manager in another browser pane. You should now see “Kafka” in the list of Services (red, but it should be there). Click on the Kafka Service and then “Configure”.</p>
+<p>5) Search for the “java heap space” Configuration Property. The standard Java Heap Space you’ll find already set up should be 50 MBytes. Put in at least 256 MBytes. The original value is simply not enough.</p>
+<p>6) Now search for the “whitelist” Configuration Property. In the field, put in “(?!x)x” (without the quotation marks). That’s a regular expression that does not match anything. Given that apparently a Whitelist is mandatory for the Mirrormaker Service to start, and I’m assuming you don’t want to replicate any topics remotely right now, just put in something that won’t replicate anything e.g. that regular expression.</p>
+<p>7) Save the changes and go back to the original Configuration Screen on the othe browser pane. Click “Retry”, or wathever, or even exit that screen and manually restart the Kafka Service in Cloudera Manager.</p>
+</blockquote>
+<h2 id="3-测试"><a href="#3-测试" class="headerlink" title="3. 测试"></a>3. 测试</h2><ul>
+<li><p>MapReduce</p>
+  <figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -uhdfs hadoop jar /opt/cloudera/parcels/CDH/<span class="class"><span class="keyword">lib</span>/<span class="title">hadoop</span>-<span class="title">mapreduce</span>/<span class="title">hadoop</span>-<span class="title">mapreduce</span>-<span class="title">examples</span>.<span class="title">jar</span> <span class="title">pi</span> 20 10</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Spark</p>
+  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -uhdfs spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode client /opt/cloudera/parcels/CDH/lib/spark/lib/spark-examples<span class="number">-1.6</span><span class="number">.0</span>-cdh5<span class="number">.7</span><span class="number">.2</span>-hadoop2<span class="number">.6</span><span class="number">.0</span>-cdh5<span class="number">.7</span><span class="number">.2</span>.jar</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>打开<a href="http://master:8088可以查看Job执行情况。" target="_blank" rel="external">http://master:8088可以查看Job执行情况。</a></p>
+<h2 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="4. 遇到的问题"></a>4. 遇到的问题</h2><h3 id="4-1-apt-update无法更新Ubuntu-Server-14-04"><a href="#4-1-apt-update无法更新Ubuntu-Server-14-04" class="headerlink" title="4.1 apt update无法更新Ubuntu Server 14.04"></a>4.1 <code>apt update</code>无法更新Ubuntu Server 14.04</h3><ul>
+<li><p>问题<br>执行<code>sudo apt update</code>，提示如下错误<code>Packages  Hash Sum mismatch</code>：</p>
+  <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">......</div><div class="line">W: Failed to fetch http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span>dists<span class="regexp">/trusty-updates/m</span>ain<span class="regexp">/binary-i386/</span>Packages  Hash Sum mismatch</div><div class="line"></div><div class="line">W: Failed to fetch http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span>dists<span class="regexp">/trusty-updates/u</span>niverse<span class="regexp">/binary-i386/</span>Packages  Hash Sum mismatch</div><div class="line"></div><div class="line">W: Failed to fetch http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span>dists<span class="regexp">/trusty-updates/m</span>ain<span class="regexp">/i18n/</span>Translation-en  Hash Sum mismatch</div><div class="line"></div><div class="line">W: Failed to fetch http:<span class="regexp">//mi</span>rrors.aliyun.com<span class="regexp">/ubuntu/</span>dists<span class="regexp">/trusty-updates/u</span>niverse<span class="regexp">/i18n/</span>Translation-en  Hash Sum mismatch</div><div class="line"></div><div class="line">E: Some index files failed to download. They have been ignored, or old ones used instead.</div></pre></td></tr></table></figure>
+</li>
+<li><p>原因<br>① 网上有的帖子写到可能和以前本地缓存冲突，可删除本地缓存的软件源列表信息，<code>sudo rm -rf /var/lib/apt/lists/*</code>，但该方法经测试无效。<br>② 最后发现是由于网络运营商的<code>HTTP</code>缓存，没有及时更新，导致用户更新 Ubuntu 系统时从ISP缓存下载软件包，报错「校验和不符」。</p>
+</li>
+<li><p>解决方法<br>① 使用<code>HTTP</code>代理：<br>如果是设置只对当前会话有效的临时代理，执行：</p>
+  <figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> http_proxy=http:<span class="comment">//yourproxyaddress:proxyport</span></div><div class="line">sudo apt-<span class="built_in">get</span> update</div><div class="line">sudo apt-<span class="built_in">get</span> upgrade</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果要设置持久代理，编辑<code>sudo vi /etc/apt/apt.conf</code>，添加一行：<br>    <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Acquire::http::Proxy <span class="string">"http://yourproxyaddress:proxyport"</span>;</div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong>经测试，我的环境下，只有这种设置持久代理的方法才有效。<br>参考链接：<a href="https://github.com/XX-net" target="_blank" rel="external">XX-NET代理配置</a><br>如果没有<code>HTTP</code>代理，只有<code>SOCKS</code>代理，首先安装<code>proxychains</code>程序，编辑<code>/etc/proxychains.conf</code>，指定<code>SOCKS</code>服务器的IP地址和端口，执行：<br>    <figure class="highlight q"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo proxychains apt-<span class="built_in">get</span> <span class="keyword">update</span></div><div class="line">sudo apt-<span class="built_in">get</span> upgrade</div></pre></td></tr></table></figure></p>
+<p>② 换协议：<br>网络服务商只使用了<code>HTTP</code>缓存，如果软件源还支持<code>HTTPS</code>或者<code>FTP</code>协议，修改<code>/etc/apt/sources.list</code>，把其中所有的<code>http://</code>换成<code>ftp://</code>，再执行系统更新。<br><strong>注：</strong>软件源不支持<code>FTP</code>协议访问，Ubuntu主服务器支持，但是网络速度会比较慢。<br>③ 修改<code>apt</code>包的源代码：<br>详见：<a href="http://dockone.io/article/366" target="_blank" rel="external">更新 Ubuntu 系统，避免报错「校验和不符」</a><br>参考链接：<br><a href="http://blog.packagecloud.io/eng/2016/03/21/apt-hash-sum-mismatch/" target="_blank" rel="external">APT Hash sum mismatch</a><br><a href="http://forum.ubuntu.org.cn/viewtopic.php?f=52&amp;t=423516" target="_blank" rel="external">关于引起更新源索引时Hash Sum mismatch问题的真正原因及解决方案</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://lug.ustc.edu.cn/wiki/mirrors/help/ubuntu" target="_blank" rel="external">中国科学技术大学开源软件镜像</a></li>
+<li><a href="http://mirrors.lifetoy.org/" target="_blank" rel="external">浙江大学开源镜像站</a></li>
+<li><a href="http://www.cnblogs.com/stone-dan-dan/p/4246027.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">ubuntu14.04LTS更新源</a></li>
+<li><a href="http://blog.csdn.net/gavin_rengf/article/details/51326824" target="_blank" rel="external">在线和离线安装Cloudera CDH 5.6.0</a></li>
+<li><a href="https://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh/" target="_blank" rel="external">Ubuntu Trusty CDH5 Download</a></li>
+<li><a href="http://www.cloudera.com/documentation/enterprise/5-7-x/topics/cdh_ig_command_line.html" target="_blank" rel="external">Installing and Deploying CDH Using the Command Line</a></li>
+<li><a href="http://www.cloudera.com/documentation/enterprise/5-7-x/topics/cm_ig_install_path_b.html" target="_blank" rel="external">Installation Path B - Installation Using Cloudera Manager Parcels or Packages</a></li>
+<li><a href="http://www.cloudera.com/documentation/enterprise/5-7-x/topics/install_cm_mariadb.html#install_cm_mariadb_install" target="_blank" rel="external">Install MariaDB Database</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html" target="_blank" rel="external">PostgreSQL新手入门</a></li>
+<li><a href="http://wiki.ubuntu.org.cn/%E4%BF%AE%E6%94%B9locale" target="_blank" rel="external">修改locale</a></li>
+<li><a href="http://www.cloudera.com/documentation/kafka/latest/topics/kafka_installing.html" target="_blank" rel="external">Installing or Upgrading Kafka</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>请我吃糖果~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sam Wong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Sam Wong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+            <a href="/tags/CDH/" rel="tag"># CDH</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/" rel="prev" title="Windows下基于CDH配置Hadoop&Spark Eclipse开发环境">
+                Windows下基于CDH配置Hadoop&Spark Eclipse开发环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5868d93f6405e50d" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/"
+           data-title="Ubuntu Server 14.04 安装部署 CDH5.7.2" data-url="http://samwong.im/2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sam Wong" />
+          <p class="site-author-name" itemprop="name">Sam Wong</p>
+          <p class="site-description motion-element" itemprop="description">后知后觉，勿忘初心。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ncepuwanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/wh694695498" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/ncepuwanghui" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-节点系统安装配置"><span class="nav-text">1. 节点系统安装配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-集群节点规划"><span class="nav-text">1.1 集群节点规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-节点系统安装"><span class="nav-text">1.2 节点系统安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-节点系统基本环境配置"><span class="nav-text">1.3 节点系统基本环境配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-安装配置CDH"><span class="nav-text">2. 安装配置CDH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Phase-1：安装Oracle-JDK-7"><span class="nav-text">2.1 Phase 1：安装Oracle JDK 7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Phase-2：安装数据库"><span class="nav-text">2.2 Phase 2：安装数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Phase-3：安装Cloudera-Manager-Server"><span class="nav-text">2.3 Phase 3：安装Cloudera Manager Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Phase-4：安装Cloudera-Manager-Agents"><span class="nav-text">2.4 Phase 4：安装Cloudera Manager Agents</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-Phase-5：安装CDH和管理服务软件"><span class="nav-text">2.5 Phase 5：安装CDH和管理服务软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-Phase-6：创建配置启动CDH和相关服务"><span class="nav-text">2.6 Phase 6：创建配置启动CDH和相关服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-测试"><span class="nav-text">3. 测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-遇到的问题"><span class="nav-text">4. 遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-apt-update无法更新Ubuntu-Server-14-04"><span class="nav-text">4.1 apt update无法更新Ubuntu Server 14.04</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sam Wong</span>
+  
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"samwong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Pg7bNsCbm5M8cCpVEdQH1iss-gzGzoHsz", "0opPvPSL16Auyc8J4KG8INHI");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

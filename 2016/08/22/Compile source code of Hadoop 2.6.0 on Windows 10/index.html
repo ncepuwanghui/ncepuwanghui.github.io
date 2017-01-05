@@ -1,0 +1,1062 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="【系统环境】123@OS             Windows 10 Enterprise (64bit)@JDK            JDK 1.7.0_67@Hadoop         Hadoop 2.6.0
+下载相关软件包Building on Windows
+Requirements:
+
+Windows System
+JDK 1.6+
+Maven 3.0 or later
+Find">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows 10编译Hadoop 2.6.0源码">
+<meta property="og:url" content="http://samwong.im/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/index.html">
+<meta property="og:site_name" content="Sam Wong">
+<meta property="og:description" content="【系统环境】123@OS             Windows 10 Enterprise (64bit)@JDK            JDK 1.7.0_67@Hadoop         Hadoop 2.6.0
+下载相关软件包Building on Windows
+Requirements:
+
+Windows System
+JDK 1.6+
+Maven 3.0 or later
+Find">
+<meta property="og:updated_time" content="2016-12-31T09:47:13.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows 10编译Hadoop 2.6.0源码">
+<meta name="twitter:description" content="【系统环境】123@OS             Windows 10 Enterprise (64bit)@JDK            JDK 1.7.0_67@Hadoop         Hadoop 2.6.0
+下载相关软件包Building on Windows
+Requirements:
+
+Windows System
+JDK 1.6+
+Maven 3.0 or later
+Find">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '1045696',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'PMBAGVNUG9',
+      apiKey: '63dcab934ccb229b0957e2530079edb4',
+      indexName: 'samwong',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://samwong.im/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/"/>
+
+
+
+
+
+  <title> Windows 10编译Hadoop 2.6.0源码 | Sam Wong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f404ff6ce8f5c24e63d26614d8f843b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Sam Wong</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          <li class="menu-item menu-item-home">
+            <a href="/" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              
+              首页
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              
+              归档
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              
+              关于
+            </a>
+          </li>
+        
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://samwong.im/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Sam Wong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Sam Wong">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Sam Wong" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Windows 10编译Hadoop 2.6.0源码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-22T16:21:20+08:00">
+                2016-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/云计算/" itemprop="url" rel="index">
+                    <span itemprop="name">云计算</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/" class="leancloud_visitors" data-flag-title="Windows 10编译Hadoop 2.6.0源码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>【系统环境】<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@OS             Windows 10 Enterprise (64bit)</span></div><div class="line"><span class="meta">@JDK            JDK 1.7.0_67</span></div><div class="line"><span class="meta">@Hadoop         Hadoop 2.6.0</span></div></pre></td></tr></table></figure></p>
+<h2 id="下载相关软件包"><a href="#下载相关软件包" class="headerlink" title="下载相关软件包"></a>下载相关软件包</h2><h3 id="Building-on-Windows"><a href="#Building-on-Windows" class="headerlink" title="Building on Windows"></a>Building on Windows</h3><blockquote>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>Windows System</li>
+<li>JDK 1.6+</li>
+<li>Maven 3.0 or later</li>
+<li>Findbugs 1.3.9 (if running findbugs)</li>
+<li>ProtocolBuffer 2.5.0</li>
+<li>CMake 2.6 or newer</li>
+<li>Windows SDK or Visual Studio 2010 Professional</li>
+<li>Unix command-line tools from GnuWin32 or Cygwin: sh, mkdir, rm, cp, tar, gzip</li>
+<li>zlib headers (if building native code bindings for zlib)</li>
+<li>Internet connection for first build (to fetch all Maven and Hadoop dependencies)</li>
+</ul>
+<p>If using Visual Studio, it must be Visual Studio 2010 Professional (not 2012). Do not use Visual Studio Express.  It does not support compiling for 64-bit, which is problematic if running a 64-bit system.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><p><a href="http://download.oracle.com/otn/java/jdk/7u67-b01/jdk-7u67-windows-x64.exe" target="_blank" rel="external">jdk-7u67-windows-x64.exe</a><br>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html</a></p>
+<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><p><a href="http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip" target="_blank" rel="external">apache-maven-3.3.9-bin.zip</a><br>下载地址：<a href="https://maven.apache.org/download.cgi" target="_blank" rel="external">https://maven.apache.org/download.cgi</a></p>
+<h3 id="Findbugs"><a href="#Findbugs" class="headerlink" title="Findbugs"></a>Findbugs</h3><p><a href="https://sourceforge.net/projects/findbugs/files/findbugs/1.3.9/findbugs-1.3.9.zip/download" target="_blank" rel="external">findbugs-1.3.9.zip</a><br>下载地址：<a href="https://sourceforge.net/projects/findbugs/files/findbugs/1.3.9/" target="_blank" rel="external">https://sourceforge.net/projects/findbugs/files/findbugs/1.3.9/</a></p>
+<h3 id="ProtocolBuffer"><a href="#ProtocolBuffer" class="headerlink" title="ProtocolBuffer"></a>ProtocolBuffer</h3><p><a href="https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.zip" target="_blank" rel="external">protobuf-2.5.0.zip</a><br><a href="https://github.com/google/protobuf/releases/download/v2.5.0/protoc-2.5.0-win32.zip" target="_blank" rel="external">protoc-2.5.0-win32.zip</a><br>下载地址：<a href="https://github.com/google/protobuf/releases/tag/v2.5.0" target="_blank" rel="external">https://github.com/google/protobuf/releases/tag/v2.5.0</a><br><strong>注：</strong>除了下载protobuf源码外，还需要下载相应版本的编译过的用于Windows平台的protoc命令（protoc-2.5.0-win32.zip）,该命令用于将.proto文件转化为Java或C++源文件。</p>
+<h3 id="CMake"><a href="#CMake" class="headerlink" title="CMake"></a>CMake</h3><p><a href="https://cmake.org/files/v3.6/cmake-3.6.1-win64-x64.zip" target="_blank" rel="external">cmake-3.6.1-win64-x64.zip</a><br>下载地址：<a href="https://cmake.org/download/" target="_blank" rel="external">https://cmake.org/download/</a></p>
+<h3 id="Visual-Studio-2010-Professional"><a href="#Visual-Studio-2010-Professional" class="headerlink" title="Visual Studio 2010 Professional"></a>Visual Studio 2010 Professional</h3><h3 id="Cygwin"><a href="#Cygwin" class="headerlink" title="Cygwin"></a>Cygwin</h3><p><a href="https://cygwin.com/setup-x86_64.exe" target="_blank" rel="external">setup-x86_64.exe</a><br>下载地址：<a href="https://cygwin.com/install.html" target="_blank" rel="external">https://cygwin.com/install.html</a></p>
+<h3 id="Zlib-headers"><a href="#Zlib-headers" class="headerlink" title="Zlib headers"></a>Zlib headers</h3><p><a href="http://zlib.net/zlib128.zip" target="_blank" rel="external">zlib128.zip</a><br>下载地址：<a href="http://www.zlib.net/" target="_blank" rel="external">http://www.zlib.net/</a></p>
+<h2 id="安装配置所需环境"><a href="#安装配置所需环境" class="headerlink" title="安装配置所需环境"></a>安装配置所需环境</h2><h3 id="JDK-1"><a href="#JDK-1" class="headerlink" title="JDK"></a>JDK</h3><p>① 安装JDK<br>② 新建系统变量<code>JAVA_HOME</code>=<code>C:\Progra~1\Java\jdk1.7.0_67</code><br><strong>注：</strong><code>JAVA_HOME</code>路径不能有空格，如果安装路径名中有空格，要使用旧式的8.3名字格式，即<code>C:\Program Files\</code>要写成<code>C:\Progra~1\</code>。<br>③ 编辑系统变量<code>Path</code>，新建<code>%JAVA_HOME%\bin</code>和<code>%JAVA_HOME%\jre\bin</code></p>
+<h3 id="Maven-1"><a href="#Maven-1" class="headerlink" title="Maven"></a>Maven</h3><p>① 解压Maven到指定目录<br>② 新建系统变量<code>M2_HOME</code>=<code>C:\WorkSpace\apache-maven-3.3.9</code><br>③ 编辑系统变量<code>Path</code>，新建<code>%M2_HOME%\bin</code></p>
+<h3 id="Findbugs-1"><a href="#Findbugs-1" class="headerlink" title="Findbugs"></a>Findbugs</h3><p>① 解压Findbugs到指定目录<br>② 编辑系统变量<code>Path</code>，新建<code>C:\WorkSpace\findbugs-1.3.9\bin</code></p>
+<h3 id="ProtocolBuffer-1"><a href="#ProtocolBuffer-1" class="headerlink" title="ProtocolBuffer"></a>ProtocolBuffer</h3><p>① 解压ProtocolBuffer到指定目录<br>② 解压<code>protoc-2.5.0-win32.zip</code>，将<code>protoc.exe</code>复制到<code>C:\WorkSpace\protobuf-2.5.0\src</code>目录下<br>③ 安装ProtocolBuffer，打开CMD命令行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> C:\WorkSpace\protobuf-2.5.0\java</div><div class="line">mvn <span class="built_in">test</span> </div><div class="line">mvn install</div><div class="line">protoc --version</div></pre></td></tr></table></figure></p>
+<p>若没有<code>protoc.exe</code>或复制目录不正确，会提示如下错误：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[INFO] Executing tasks</div><div class="line">[mkdir] Created dir: C:\WorkSpace\protobuf-2.5.0\java\target\generated-sources</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] BUILD FAILURE</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[INFO] Total time: 04:22 min</div><div class="line">[INFO] Finished at: 2016-08-22T17:56:19+08:00</div><div class="line">[INFO] Final Memory: 16M/439M</div><div class="line">[INFO] ------------------------------------------------------------------------</div><div class="line">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin:1.3:run (generate-sources) on project protobuf-java: An Ant BuildException has occured: Execute failed: java.io.IOException: Cannot run program <span class="string">"..\src\protoc"</span>: CreateProcess error=2, ????????? -&gt; [Help 1]</div><div class="line">[ERROR]</div><div class="line">[ERROR] To see the full stack trace of the errors, re-run Maven with the <span class="_">-e</span> switch.</div><div class="line">[ERROR] Re-run Maven using the -X switch to <span class="built_in">enable</span> full debug logging.</div><div class="line">[ERROR]</div><div class="line">[ERROR] For more information about the errors and possible solutions, please <span class="built_in">read</span> the following articles:</div><div class="line">[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException</div></pre></td></tr></table></figure></p>
+<p>④ 将<code>protoc.exe</code>所在路径<code>C:\WorkSpace\protobuf-2.5.0\src</code>，添加到系统变量<code>Path</code></p>
+<h3 id="CMake-1"><a href="#CMake-1" class="headerlink" title="CMake"></a>CMake</h3><p>① 解压CMake到指定目录<br>② 编辑系统变量<code>Path</code>，新建<code>C:\WorkSpace\cmake-3.6.1-win64-x64\bin</code></p>
+<h3 id="Cygwin-1"><a href="#Cygwin-1" class="headerlink" title="Cygwin"></a>Cygwin</h3><p>① 安装Cygwin64<br>② 编辑系统变量<code>Path</code>，新建<code>C:\WorkSpace\cygwin64\bin</code></p>
+<h3 id="Zlib"><a href="#Zlib" class="headerlink" title="Zlib"></a>Zlib</h3><p>① 解压Zlib到指定目录<br>② 新建系统变量<code>ZLIB_HOME</code>=<code>C:\WorkSpace\zlib-1.2.8</code></p>
+<h2 id="编译Hadoop2-6-0"><a href="#编译Hadoop2-6-0" class="headerlink" title="编译Hadoop2.6.0"></a>编译Hadoop2.6.0</h2><h3 id="设置Platform"><a href="#设置Platform" class="headerlink" title="设置Platform"></a>设置Platform</h3><p>新建系统变量<code>Platform</code>=<code>x64</code></p>
+<h3 id="编译Hadoop2-6-0-1"><a href="#编译Hadoop2-6-0-1" class="headerlink" title="编译Hadoop2.6.0"></a>编译Hadoop2.6.0</h3><p>用右键以管理员身份运行Visual Studio x64 Win64 命令提示(2010)，<code>开始菜单</code>–&gt;<code>所有程序</code>–&gt;<code>Microsoft Visual Studio 2010</code>–&gt;<code>Visual Studio Tools</code>–&gt;<code>Visual Studio x64 Win64 命令提示(2010)</code>，执行如下命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> C:\WorkSpace\hadoop-2.6.0-src</div><div class="line">mvn package  -Pdist,native-win -DskipTests -Dtar</div></pre></td></tr></table></figure></p>
+<p>编译完成后，编译好的hadoo-2.6.0在目录<code>C:\WorkSpace\hadoop-2.6.0-src\hadoop-dist\target\</code>中。<br><strong>注：</strong>本文采用Visual Studio 2015编译，<code>开始</code>–&gt;<code>所有应用</code>–&gt;<code>Visual Studio 2015</code>–&gt;<code>VS2015 x64 本机工具命令提示符</code></p>
+<h3 id="遇到的错误"><a href="#遇到的错误" class="headerlink" title="遇到的错误"></a>遇到的错误</h3><p>① hadoop-common编译失败<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[INFO] --- hadoop-maven-plugins:2.6.0:version-info (version-info) @ hadoop-common ---</div><div class="line">[WARNING] [svn, info] failed: java.io.IOException: Cannot run program <span class="string">"svn"</span>: CreateProcess error=2, ?????????</div><div class="line">[WARNING] [git, branch] failed with error code 128</div><div class="line">[INFO] SCM: NONE</div><div class="line">......</div><div class="line">C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.Cpp.Platform.targets(55,5): error MSB8020: The build tools <span class="keyword">for</span> Visual Studio 2010 (Platform Toolset = <span class="string">'v100'</span>) cannot be found. To build using the v100 build tools, please install Visual Studio 2010 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and <span class="keyword">then</span> selecting <span class="string">"Retarget solution"</span>.[C:\WorkSpace\hadoop-2.6.0-src\hadoop-common-project\hadoop-common\src\main\winutils\libwinutils.vcxproj]</div><div class="line">已完成生成项目“C:\WorkSpace\hadoop-2.6.0-src\hadoop-common-project\hadoop-common\src\main\winutils\libwinutils.vcxproj</div><div class="line">”(默认目标)的操作 - 失败。</div><div class="line">已完成生成项目“C:\WorkSpace\hadoop-2.6.0-src\hadoop-common-project\hadoop-common\src\main\winutils\winutils.vcxproj.metaproj”(默认目标)的操作 - 失败。</div><div class="line">已完成生成项目“C:\WorkSpace\hadoop-2.6.0-src\hadoop-common-project\hadoop-common\src\main\winutils\winutils.sln”(默认</div><div class="line">目标)的操作 - 失败。</div><div class="line">生成失败。</div><div class="line">......</div><div class="line">[ERROR] Failed to execute goal org.codehaus.mojo:<span class="built_in">exec</span>-maven-plugin:1.2:<span class="built_in">exec</span> (compile-ms-winutils) on project hadoop-comm</div><div class="line">on: Command execution failed. Process exited with an error: 1(Exit value: 1) -&gt; [Help 1]</div><div class="line">org.ap</div><div class="line">......</div><div class="line">[ERROR] After correcting the problems, you can resume the build with the <span class="built_in">command</span></div><div class="line">[ERROR]   mvn &lt;goals&gt; -rf :hadoop-common</div></pre></td></tr></table></figure></p>
+<p>解决方法，Visual Studio版本问题，官方默认使用Visual Studio 2010 Professional，但本文采用Visual Studio 2015，因此对于生成失败的项目，需要用Visual Studio 2015重新打开，升级项目至Visual Studio 2015版本即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\WorkSpace\hadoop-2.6.0-src\hadoop-common-project\hadoop-common\src\main\winutils\winutils.sln</div><div class="line">C:\WorkSpace\hadoop-2.6.0-src\hadoop-common-project\hadoop-common\src\main\native\native.sln</div></pre></td></tr></table></figure></p>
+<p>② hadoop-hdfs编译失败<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">main:</div><div class="line">[mkdir] Created dir: C:\WorkSpace\hadoop-2.6.0-src\hadoop-hdfs-project\hadoop-hdfs\target\native</div><div class="line"> [<span class="built_in">exec</span>] -- The C compiler identification is unknown</div><div class="line"> [<span class="built_in">exec</span>] -- The CXX compiler identification is unknown</div><div class="line"> [<span class="built_in">exec</span>] CMake Error <span class="keyword">in</span> CMakeLists.txt:</div><div class="line"> [<span class="built_in">exec</span>]   No CMAKE_C_COMPILER could be found.</div><div class="line"> [<span class="built_in">exec</span>] CMake Error <span class="keyword">in</span> CMakeLists.txt:</div><div class="line"> [<span class="built_in">exec</span>]   No CMAKE_CXX_COMPILER could be found.</div><div class="line"> [<span class="built_in">exec</span>] -- Configuring incomplete, errors occurred!</div><div class="line"> [<span class="built_in">exec</span>] See also <span class="string">"C:/WorkSpace/hadoop-2.6.0-src/hadoop-hdfs-project/hadoop-hdfs/target/native/CMakeFiles/CMakeOutput.log"</span>.</div><div class="line"> [<span class="built_in">exec</span>] See also <span class="string">"C:/WorkSpace/hadoop-2.6.0-src/hadoop-hdfs-project/hadoop-hdfs/target/native/CMakeFiles/CMakeError.log"</span>.</div><div class="line">......</div><div class="line">[ERROR] After correcting the problems, you can resume the build with the <span class="built_in">command</span></div><div class="line">[ERROR]   mvn &lt;goals&gt; -rf :hadoop-hdfs</div></pre></td></tr></table></figure></p>
+<p>问题原因是Visual Studio版本问题，解决方法：打开文件C:\WorkSpace\hadoop-2.6.0-src\hadoop-hdfs-project\hadoop-hdfs\pom.xml`，将<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby">G <span class="string">'Visual Studio 10 Win64'</span></span></div></pre></td></tr></table></figure></p>
+<p>修改为：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby">G <span class="string">'Visual Studio 14 Win64'</span></span></div></pre></td></tr></table></figure></p>
+<p>若仍无法编译，可查看日志<code>C:/WorkSpace/hadoop-2.6.0-src/hadoop-hdfs-project/hadoop-hdfs/target/native/CMakeFiles/CMakeError.log</code>。若日志提示找不到<code>Microsoft.Cpp.Default.props</code>，可在<code>C:\Program Files (x86)</code>中查找<code>Microsoft.Cpp.Default.props</code>，例如最后找到所在路径<code>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140</code><br>用文本编辑器打开项目文件<br><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:<span class="symbol">\W</span>orkSpace<span class="symbol">\h</span>adoop-2.6.0-src<span class="symbol">\h</span>adoop-hdfs-project<span class="symbol">\h</span>adoop-hdfs<span class="symbol">\t</span>arget<span class="symbol">\n</span>ative<span class="symbol">\C</span>MakeFiles<span class="symbol">\3</span>.6.1<span class="symbol">\C</span>ompilerIdC<span class="symbol">\C</span>ompilerIdC.vcxproj</div><div class="line">C:<span class="symbol">\W</span>orkSpace<span class="symbol">\h</span>adoop-2.6.0-src<span class="symbol">\h</span>adoop-hdfs-project<span class="symbol">\h</span>adoop-hdfs<span class="symbol">\t</span>arget<span class="symbol">\n</span>ative<span class="symbol">\C</span>MakeFiles<span class="symbol">\3</span>.6.1<span class="symbol">\C</span>ompilerIdCXX<span class="symbol">\C</span>ompilerIdCXX.vcxproj</div></pre></td></tr></table></figure></p>
+<p>查找<code>Microsoft.Cpp.Default.props</code>所在行，如下：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">Import</span> <span class="keyword">Project</span>=<span class="string">"$(VCTargetsPath)\Microsoft.Cpp.Default.props"</span> <span class="regexp">/&gt;</span></div></pre></td></tr></table></figure></p>
+<p>原因是没有系统变量<code>VCTargetsPath</code>，新建系统变量<code>VCTargetsPath</code>=<code>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140</code>，然后重新编译：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn package  -Pdist,native-win -DskipTests -Dtar -rf <span class="symbol">:hadoop-hdfs</span></div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong>若还提示找不到，可能是环境变量未生效，关闭命令行窗口，重新打开执行编译命令，或者重启电脑试试。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="http://wiki.apache.org/hadoop/Hadoop2OnWindows" target="_blank" rel="external">Build and Install Hadoop 2.x or newer on Windows</a></li>
+<li><a href="http://www.linuxidc.com/Linux/2016-08/134131.htm" target="_blank" rel="external">Windows 10下编译安装Hadoop2.6</a></li>
+<li><a href="http://blog.csdn.net/oneinmore/article/details/44996811" target="_blank" rel="external">在windows 7 64bit下编译Hadoop 2.6.0源码</a></li>
+<li><a href="http://www.cnblogs.com/hanganglin/p/4349919.html" target="_blank" rel="external">编译本地64位版本的hadoop-2.6.0</a></li>
+<li><a href="http://www.tbk.ren/article/5.html" target="_blank" rel="external">在Windows下编译Hadoop2.5</a></li>
+<li><a href="http://blog.csdn.net/jiangguilong2000/article/details/9284297" target="_blank" rel="external">Protobuf 的安装使用总结</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>请我吃糖果~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sam Wong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Sam Wong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/" rel="next" title="Windows下基于CDH配置Hadoop&Spark Eclipse开发环境">
+                <i class="fa fa-chevron-left"></i> Windows下基于CDH配置Hadoop&Spark Eclipse开发环境
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/31/use_hexo_to_build_personal_blog/" rel="prev" title="使用Hexo搭建个人博客">
+                使用Hexo搭建个人博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5868d93f6405e50d" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/"
+           data-title="Windows 10编译Hadoop 2.6.0源码" data-url="http://samwong.im/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sam Wong" />
+          <p class="site-author-name" itemprop="name">Sam Wong</p>
+          <p class="site-description motion-element" itemprop="description">后知后觉，勿忘初心。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ncepuwanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/wh694695498" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/ncepuwanghui" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载相关软件包"><span class="nav-text">下载相关软件包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Building-on-Windows"><span class="nav-text">Building on Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK"><span class="nav-text">JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven"><span class="nav-text">Maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Findbugs"><span class="nav-text">Findbugs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ProtocolBuffer"><span class="nav-text">ProtocolBuffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMake"><span class="nav-text">CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visual-Studio-2010-Professional"><span class="nav-text">Visual Studio 2010 Professional</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cygwin"><span class="nav-text">Cygwin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zlib-headers"><span class="nav-text">Zlib headers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置所需环境"><span class="nav-text">安装配置所需环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK-1"><span class="nav-text">JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven-1"><span class="nav-text">Maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Findbugs-1"><span class="nav-text">Findbugs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ProtocolBuffer-1"><span class="nav-text">ProtocolBuffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMake-1"><span class="nav-text">CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cygwin-1"><span class="nav-text">Cygwin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zlib"><span class="nav-text">Zlib</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译Hadoop2-6-0"><span class="nav-text">编译Hadoop2.6.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置Platform"><span class="nav-text">设置Platform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译Hadoop2-6-0-1"><span class="nav-text">编译Hadoop2.6.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的错误"><span class="nav-text">遇到的错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sam Wong</span>
+  
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"samwong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Pg7bNsCbm5M8cCpVEdQH1iss-gzGzoHsz", "0opPvPSL16Auyc8J4KG8INHI");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

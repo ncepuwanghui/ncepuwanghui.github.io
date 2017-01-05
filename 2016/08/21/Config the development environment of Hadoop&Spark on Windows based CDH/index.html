@@ -1,0 +1,1157 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop,Spark,Ubuntu,Eclipse," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="【声明】欢迎转载，转载本文请注明作者和出处本文链接：https://www.zybuluo.com/ncepuwanghui/note/475276
+
+【版本控制】
+  12345@Title          Windows下基于CDH配置Hadoop&amp;amp;Spark Eclipse开发环境@Version        v1.0@Timestamp      2016-08-21 14:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows下基于CDH配置Hadoop&Spark Eclipse开发环境">
+<meta property="og:url" content="http://samwong.im/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/index.html">
+<meta property="og:site_name" content="Sam Wong">
+<meta property="og:description" content="【声明】欢迎转载，转载本文请注明作者和出处本文链接：https://www.zybuluo.com/ncepuwanghui/note/475276
+
+【版本控制】
+  12345@Title          Windows下基于CDH配置Hadoop&amp;amp;Spark Eclipse开发环境@Version        v1.0@Timestamp      2016-08-21 14:">
+<meta property="og:image" content="http://7xixm6.com1.z0.glb.clouddn.com/image/note/blogwinutils_error.png">
+<meta property="og:image" content="http://7xixm6.com1.z0.glb.clouddn.com/image/note/blogpermission_denied_user_Administrator.png">
+<meta property="og:image" content="http://7xixm6.com1.z0.glb.clouddn.com/mapreduce_location_error.png">
+<meta property="og:updated_time" content="2016-12-31T07:32:12.193Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows下基于CDH配置Hadoop&Spark Eclipse开发环境">
+<meta name="twitter:description" content="【声明】欢迎转载，转载本文请注明作者和出处本文链接：https://www.zybuluo.com/ncepuwanghui/note/475276
+
+【版本控制】
+  12345@Title          Windows下基于CDH配置Hadoop&amp;amp;Spark Eclipse开发环境@Version        v1.0@Timestamp      2016-08-21 14:">
+<meta name="twitter:image" content="http://7xixm6.com1.z0.glb.clouddn.com/image/note/blogwinutils_error.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '1045696',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'PMBAGVNUG9',
+      apiKey: '63dcab934ccb229b0957e2530079edb4',
+      indexName: 'samwong',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://samwong.im/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/"/>
+
+
+
+
+
+  <title> Windows下基于CDH配置Hadoop&Spark Eclipse开发环境 | Sam Wong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3f404ff6ce8f5c24e63d26614d8f843b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Sam Wong</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          <li class="menu-item menu-item-home">
+            <a href="/" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              
+              首页
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-archives">
+            <a href="/archives" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              
+              归档
+            </a>
+          </li>
+        
+      
+        
+        
+      
+        
+        
+          <li class="menu-item menu-item-about">
+            <a href="/about" rel="section">
+              
+                <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              
+              关于
+            </a>
+          </li>
+        
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://samwong.im/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Sam Wong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Sam Wong">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Sam Wong" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Windows下基于CDH配置Hadoop&Spark Eclipse开发环境
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-21T14:44:19+08:00">
+                2016-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/云计算/" itemprop="url" rel="index">
+                    <span itemprop="name">云计算</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/" class="leancloud_visitors" data-flag-title="Windows下基于CDH配置Hadoop&Spark Eclipse开发环境">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><p><strong>【声明】</strong><br>欢迎转载，转载本文请注明作者和出处<br>本文链接：<a href="https://www.zybuluo.com/ncepuwanghui/note/475276" target="_blank" rel="external">https://www.zybuluo.com/ncepuwanghui/note/475276</a></p>
+</li>
+<li><p><strong>【版本控制】</strong></p>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@Title</span>          Windows下基于CDH配置Hadoop&amp;Spark Eclipse开发环境</div><div class="line"><span class="variable">@Version</span>        v1.<span class="number">0</span></div><div class="line"><span class="variable">@Timestamp</span>      <span class="number">2016</span>-<span class="number">08</span>-<span class="number">21</span> <span class="number">14</span>:<span class="number">44</span></div><div class="line"><span class="variable">@Author</span>         Sam Wong</div><div class="line"><span class="variable">@Mail</span>           ncepuwanghui<span class="variable">@foxmail</span>.com</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>【系统环境】</strong></p>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@OS</span>             Windows <span class="number">10</span> Enterprise (<span class="number">64</span>bit)</div><div class="line"><span class="variable">@JDK</span>            JDK <span class="number">1.7</span>.<span class="number">0</span>_67</div><div class="line"><span class="variable">@Eclipse</span>        Mars <span class="number">4.5</span>.<span class="number">0</span></div><div class="line"><span class="variable">@Scala</span>          Scala <span class="number">2.10</span>.<span class="number">6</span></div><div class="line"></div><div class="line"><span class="variable">@Cluster</span>        Ubuntu Server <span class="number">14.04</span>.<span class="number">5</span> LTS (<span class="number">64</span>bit)</div><div class="line">                CDH <span class="number">5.7</span>.<span class="number">2</span></div><div class="line">                JDK <span class="number">1.7</span>.<span class="number">0</span>_67</div><div class="line">                Hadoop <span class="number">2.6</span>.<span class="number">0</span></div><div class="line">                Spark <span class="number">1.6</span>.<span class="number">0</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h2 id="1-下载配置相关软件"><a href="#1-下载配置相关软件" class="headerlink" title="1. 下载配置相关软件"></a>1. 下载配置相关软件</h2><h3 id="1-1-JDK"><a href="#1-1-JDK" class="headerlink" title="1.1 JDK"></a>1.1 JDK</h3><ul>
+<li><p>下载<br>① <strong>JDK 7</strong><br><a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html" target="_blank" rel="external">Java SE 7 Archive Downloads</a><br>② <strong>JDK 8</strong><br><a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html" target="_blank" rel="external">Java SE 8 Archive Downloads</a><br><strong>注：</strong>本文为了和CDH集群JDK版本一致，下载了<a href="http://download.oracle.com/otn/java/jdk/7u67-b01/jdk-7u67-windows-x64.exe" target="_blank" rel="external">jdk-7u67-windows-x64.exe</a></p>
+</li>
+<li><p>配置<br>① 新建系统变量<code>JAVA_HOME</code>=<code>C:\Progra~1\Java\jdk1.7.0_67</code><br>② 在系统变量<code>Path</code>后增加<code>%JAVA_HOME%\bin</code>和<code>%JAVA_HOME%\jre\bin</code></p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="1-2-Eclipse"><a href="#1-2-Eclipse" class="headerlink" title="1.2 Eclipse"></a>1.2 Eclipse</h3><ul>
+<li>下载Eclipse IDE for Java EE Developers<br>选择合适版本下载，本文选择下载<strong>Eclipse Mars 4.5.0</strong><br><a href="https://wiki.eclipse.org/Older_Versions_Of_Eclipse" target="_blank" rel="external">https://wiki.eclipse.org/Older_Versions_Of_Eclipse</a><br><a href="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/mars/R/eclipse-jee-mars-R-win32-x86_64.zip" target="_blank" rel="external">eclipse-jee-mars-R-win32-x86_64.zip</a><br><strong>注：</strong>为了方便，也可以直接安装<strong><a href="http://scala-ide.org/download/current.html" target="_blank" rel="external">Scala IDE</a></strong></li>
+</ul>
+<h3 id="1-3-Hadoop和相关插件"><a href="#1-3-Hadoop和相关插件" class="headerlink" title="1.3 Hadoop和相关插件"></a>1.3 Hadoop和相关插件</h3><ul>
+<li><p><strong>Hadoop 2.6.0</strong><br>① <a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz" target="_blank" rel="external">hadoop-2.6.0.tar.gz</a><br>下载地址：<a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/" target="_blank" rel="external">https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/</a></p>
+</li>
+<li><p><strong>Hadoop Eclipse Plugin</strong><br>① 直接下载：<a href="http://download.csdn.net/detail/xiaozhu_0801/9609180" target="_blank" rel="external">hadoop-eclipse-plugin-2.6.0.jar</a><br>下载地址：<a href="http://download.csdn.net/detail/xiaozhu_0801/9609180" target="_blank" rel="external">http://download.csdn.net/detail/xiaozhu_0801/9609180</a><br>② 手动编译：<br><strong>a.</strong> 下载<strong>Ant</strong><br><a href="http://mirrors.hust.edu.cn/apache//ant/binaries/apache-ant-1.9.7-bin.zip" target="_blank" rel="external">apache-ant-1.9.7-bin.zip</a><br>下载地址：<a href="http://ant.apache.org/bindownload.cgi" target="_blank" rel="external">http://ant.apache.org/bindownload.cgi</a><br><strong>b.</strong> 下载<strong>hadoop2x-eclipse-plugin</strong>源码<br><a href="https://github.com/winghc/hadoop2x-eclipse-plugin/archive/master.zip" target="_blank" rel="external">hadoop2x-eclipse-plugin-master.zip</a><br>下载地址：<a href="https://github.com/winghc/hadoop2x-eclipse-plugin" target="_blank" rel="external">https://github.com/winghc/hadoop2x-eclipse-plugin</a><br><strong>c.</strong> 编译生成hadoop-eclipse-plugin-2.6.0.jar<br>第一步：安装Ant，配置Ant环境变量。新建<code>ANT_HOME</code>=<code>C:\WorkSpace\apache-ant-1.9.7</code>，在<code>PATH</code>后面加<code>;%ANT_HOME%\bin</code>。在<code>cmd</code>窗口测试是否安装配置正确<code>ant -version</code>。<br><strong>注：</strong>若提示</p>
+  <figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">C:</span>\Users\Administrator&gt;ant -version</div><div class="line">Unable to locate tools.jar. Expected to find it in <span class="symbol">C:</span>\Program Files\Java\jre7\<span class="class"><span class="keyword">lib</span>\<span class="title">tools</span>.<span class="title">jar</span></span></div><div class="line">Apache Ant(TM) version <span class="number">1.9</span>.<span class="number">7</span> compiled on April <span class="number">9</span> <span class="number">2016</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>原因是JRE目录缺少<code>tools.jar</code>，可在JDK目录<code>C:\Program Files\Java\jdk1.7.0_67\lib</code>下拷贝一份至<code>C:\Program Files\Java\jre7\lib</code>。<br>第二步：CMD命令行切换到目录<code>C:\WorkSpace\hadoop2x-eclipse-plugin\src\contrib\eclipse-plugin</code>，编译生成<code>hadoop-eclipse-plugin-2.6.0.jar</code>，如下：<br>    <figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">C:<span class="symbol">\U</span>sers<span class="symbol">\A</span>dministrator&gt;cd C:<span class="symbol">\W</span>orkSpace<span class="symbol">\h</span>adoop2x-eclipse-plugin<span class="symbol">\s</span>rc<span class="symbol">\c</span>ontrib<span class="symbol">\e</span>clipse-plugin</div><div class="line"></div><div class="line">C:<span class="symbol">\W</span>orkSpace<span class="symbol">\h</span>adoop2x-eclipse-plugin<span class="symbol">\s</span>rc<span class="symbol">\c</span>ontrib<span class="symbol">\e</span>clipse-plugin&gt;ant jar -Dversion=2.6.0 -Dhadoop.version=2.6.0 -Declipse.home="C:<span class="symbol">\P</span>rogram Files<span class="symbol">\e</span>clipse" -Dhadoop.home="C:<span class="symbol">\W</span>orkSpace<span class="symbol">\h</span>adoop-2.6.0"</div><div class="line">......</div><div class="line">BUILD SUCCESSFUL</div></pre></td></tr></table></figure></p>
+<p>编译成功生成的<code>hadoop-eclipse-plugin-2.6.0.jar</code>在目录<code>C:\WorkSpace\hadoop2x-eclipse-plugin\build\contrib\eclipse-plugin</code>中。</p>
+<ul>
+<li><strong>hadoop-common-bin</strong><br>① 直接下载：<a href="http://download.csdn.net/detail/xiaozhu_0801/9609181" target="_blank" rel="external">hadoop-common-2.6.0-bin.zip</a>包括：<code>hadoop.dll</code>和<code>winutils.exe</code><br>下载地址：<a href="http://download.csdn.net/detail/xiaozhu_0801/9609181" target="_blank" rel="external">http://download.csdn.net/detail/xiaozhu_0801/9609181</a><br>② 手动编译<br>详见：<a href="https://www.zybuluo.com/ncepuwanghui/note/343755" target="_blank" rel="external">https://www.zybuluo.com/ncepuwanghui/note/343755</a></li>
+</ul>
+<h3 id="1-4-Spark、Scala及相关工具"><a href="#1-4-Spark、Scala及相关工具" class="headerlink" title="1.4 Spark、Scala及相关工具"></a>1.4 Spark、Scala及相关工具</h3><ul>
+<li><p><strong>Spark 1.6.0</strong><br><a href="http://d3kbcqa49mib13.cloudfront.net/spark-1.6.0-bin-hadoop2.6.tgz" target="_blank" rel="external">spark-1.6.0-bin-hadoop2.6.tgz</a><br>下载地址：<a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">http://spark.apache.org/downloads.html</a><br><strong>注：</strong>下载与集群Hadoop版本对应的Spark预编译版本</p>
+</li>
+<li><p><strong>Scala 2.10.6</strong><br><a href="http://downloads.lightbend.com/scala/2.10.6/scala.msi" target="_blank" rel="external">scala-2.10.6.msi</a><br>下载地址：<a href="http://scala-lang.org/download/all.html" target="_blank" rel="external">http://scala-lang.org/download/all.html</a><br><strong>注：</strong>Scala版本要和Spark版本对应。</p>
+</li>
+<li><p><strong>Eclipse Scala IDE Plugin</strong><br>在Eclipse中的<code>Help</code>菜单–&gt;<code>Install New Software</code>–&gt;在弹出的窗口中的<code>Work with</code>输入框里输入下面的链接–&gt;<code>Select All</code>或者只选择<code>Scala IDE for Eclipse</code>和<code>Scala IDE for Eclipse development support</code>安装。</p>
+  <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>download.scala-ide.org<span class="regexp">/sdk/</span>lithium<span class="regexp">/e44/</span>scala211<span class="regexp">/stable/</span>site</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>下载地址：<a href="http://scala-ide.org/download/prev-stable.html" target="_blank" rel="external">http://scala-ide.org/download/prev-stable.html</a><br><strong>注：</strong> Scala IDE Plugin版本要和Spark中的Scala版本对应，最新的Scala IDE Plugin已经可以同时支持Scala 2.11.8和Scala 2.10.6</p>
+<ul>
+<li><p><strong>sbt</strong><br>① <a href="https://dl.bintray.com/sbt/native-packages/sbt/0.13.12.1/sbt-0.13.12.1.msi" target="_blank" rel="external">sbt-0.13.12.1.msi</a><br>下载地址：<a href="http://www.scala-sbt.org/download.html" target="_blank" rel="external">http://www.scala-sbt.org/download.html</a><br>② 新建环境变量<code>SBT_HOME</code>=<code>C:\WorkSpace\sbt-0.13.12.1</code>，在环境变量<code>Path</code>后增加<code>%SBT_HOME%\bin</code></p>
+</li>
+<li><p><strong>Maven</strong><br>① <a href="http://mirrors.hust.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip" target="_blank" rel="external">apache-maven-3.3.9-bin.zip</a><br>下载地址：<a href="http://maven.apache.org/download.cgi" target="_blank" rel="external">http://maven.apache.org/download.cgi</a><br>② 新建环境变量<code>M2_HOME</code>=<code>C:\WorkSpace\apache-maven-3.3.9</code>，在环境变量<code>Path</code>后增加<code>%M2_HOME%\bin</code></p>
+</li>
+</ul>
+<h2 id="2-配置Hadoop-Eclipse开发环境"><a href="#2-配置Hadoop-Eclipse开发环境" class="headerlink" title="2. 配置Hadoop Eclipse开发环境"></a>2. 配置Hadoop Eclipse开发环境</h2><h3 id="2-1-配置Hadoop-Eclipse开发环境"><a href="#2-1-配置Hadoop-Eclipse开发环境" class="headerlink" title="2.1 配置Hadoop Eclipse开发环境"></a>2.1 配置Hadoop Eclipse开发环境</h3><ul>
+<li><p>安装Hadoop Eclipse Plugin<br>将<code>hadoop-eclipse-plugin-2.6.0.jar</code>复制到Eclipse安装目录的<code>plugins</code>文件夹中，重新启动Eclipse。</p>
+</li>
+<li><p>配置Hadoop Eclipse Plugin<br>① 解压<code>hadoop-2.6.0.tar.gz</code>到指定目录；<br>② 重新启动Ecliopse，可在左侧<code>Project Explorer</code>中看到<code>DFS Location</code>。点击<code>Window</code>–&gt;<code>Preferences</code>，在左侧找到<code>Hadoop Map/Reduce</code>，将<code>Hadoop installation directory</code>指定为刚才<code>hadoop-2.6.0.tar.gz</code>解压目录；<br>③ 点击<code>Window</code>–&gt;<code>Perspective</code>–&gt;<code>Open Perspective</code>–&gt;<code>Other</code>，选择<code>Map/Reduce</code>，切换到<code>Map/Reduce</code>视图；<br>④ 点击窗体下方的<code>Map/Reduce Locations</code>，面板下方空白处右键，选择<code>New Hadoop location</code>，在<code>Location Name</code>中填入任意名称，如<code>CDH 5.7.2</code>；在<code>Geneal</code>页填入CDH集群<code>Map/Reduce(v2) Master</code>和<code>DFS Master</code>的地址和端口。如：<br>  |Service|Address|Port|<br>  |:-:|:-:|:-:|<br>  |Map/Reduce(v2) Master|192.168.199.100|8032|<br>  |DFS Master|192.168.199.100|8020|<br>此外，在<code>Advanced parameters</code>页可以对Hadoop参数进行配置，但是手动配置较为繁琐，后面会介绍通过复制配置文件的方式配置Hadoop参数；<br>⑤ 完成后，在左侧<code>DFS Location</code>就可以看到一个名为<code>CDH 5.7.2</code>的连接，打开后可以看到HDFS目录结构和文件列表，由于权限问题，有的文件肯显示<code>Error:Permission denied</code>，可忽略。<br><strong>注：</strong>HDFS中的内容变动后，Eclipse不会同步刷新，需要右键点击<code>Project Explorer</code>中的<code>MapReduce Location</code>，选择<code>Refresh</code>，才能看到变动后的文件。</p>
+</li>
+</ul>
+<h3 id="2-2-测试Hadoop-Eclipse开发环境"><a href="#2-2-测试Hadoop-Eclipse开发环境" class="headerlink" title="2.2 测试Hadoop Eclipse开发环境"></a>2.2 测试Hadoop Eclipse开发环境</h3><ul>
+<li><p>获取CDH集群HDFS和MapReduce配置文件<br>登录Cloudera Manager，在<code>Cluster</code>–&gt;<code>Actions</code>–&gt;<code>View Client Configuration URLs</code>中下载<code>HDFS</code>和<code>YARN (MR2 
+Included)</code>的客户端配置文件。<br><strong>注：</strong>其他部署方式，可自行从集群下载配置文件<code>core-site.xml</code>、<code>hdfs-site.xml</code>、<code>mapred-site.xml</code>、<code>yarn-site.xml</code>、<code>log4j.properties</code></p>
+</li>
+<li><p>配置Hadoop动态链接库和工具包<br>将前面下载的<code>hadoop-common-2.6.0-bin.zip</code>解压，将<code>hadoop.dll</code>、<code>winutils.exe</code>复制到Windows下hadoop目录的<code>bin</code>目录中，同时配置环境变量<code>HADOOP_HOME</code>和在<code>Path</code>变量中加入<code>%HADOOP_HOME%\bin</code>，重启电脑。<br><strong>注：</strong>若未添加Hadoop动态链接库和工具包，则新建工程后会提示如下错误： </p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Set</span> workspace compiler compliance <span class="keyword">settings</span> <span class="keyword">to</span> <span class="number">1.5</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>或者运行工程时提示如下错误：<br>    <figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    ERROR [main] util.Shell (Shell.java:getWinUtilsPath(<span class="number">303</span>)) - Failed <span class="keyword">to</span> locate the winutils <span class="built_in">binary</span> <span class="keyword">in</span> the hadoop <span class="built_in">binary</span> path  </div><div class="line">java.io.IOException: Could <span class="literal">not</span> locate executable <span class="literal">null</span>\bin\winutils.exe <span class="keyword">in</span> the Hadoop binaries. </div><div class="line">    Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.UnsatisfiedLinkError: org.apache.hadoop.io.nativeio.NativeIO$Windows.access0(Ljava/lang/<span class="built_in">String</span><span class="comment">;I)</span></div><div class="line">        at org.apache.hadoop.io.nativeio.NativeIO$Windows.access0(Native Method)  </div><div class="line">        at org.apache.hadoop.io.nativeio.NativeIO$Windows.access(NativeIO.java:<span class="number">435</span>)</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>在Eclipse中创建MapReduce工程<br>详见：<a href="http://www.powerxing.com/hadoop-build-project-using-eclipse" target="_blank" rel="external">http://www.powerxing.com/hadoop-build-project-using-eclipse</a><br><strong>注：</strong>将前面下载的Hadoop集群配置文件中的<code>core-site.xml</code>、<code>hdfs-site.xml</code>、<code>mapred-site.xml</code>、<code>yarn-site.xml</code>、<code>log4j.properties</code>拷贝到工程<code>src</code>目录下。</p>
+</li>
+<li><p>在Eclipse中运行MapReduce工程<br>配置运行参数：选择<code>run</code>–&gt;<code>run configurations</code>，在<code>Arguments</code>里加入如下参数，格式为“输入路径 输出路径”</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">input</span></div><div class="line">output</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>运行<code>Run on Hadoop</code></p>
+<h3 id="2-3-可能遇到的错误"><a href="#2-3-可能遇到的错误" class="headerlink" title="2.3 可能遇到的错误"></a>2.3 可能遇到的错误</h3><ul>
+<li>输入目录不存在  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.mapreduce</span><span class="selector-class">.lib</span><span class="selector-class">.input</span><span class="selector-class">.InvalidInputException</span>: Input path does not exist: hdfs:<span class="comment">//master:8020/user/Administrator/input</span></div><div class="line">......</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>原因是HDFS中不存在相应目录，可SSH访问HDFS部署节点，执行：<br>    <figure class="highlight hsp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -uhdfs hdfs dfs -<span class="keyword">mkdir</span> -p /user/Administrator/<span class="keyword">input</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>输出目录已存在<br>前面只需创建输入目录，不需要创建输出目录，若输出目录已存在，会提示如下错误：  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">21</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">58</span> INFO jvm<span class="selector-class">.JvmMetrics</span>: Initializing JVM Metrics with processName=JobTracker, sessionId=</div><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.mapred</span><span class="selector-class">.FileAlreadyExistsException</span>: Output directory hdfs:<span class="comment">//master:8020/user/Administrator/output already exists</span></div><div class="line">......</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可SSH访问HDFS部署节点，执行如下命令，删除已存在的目录：<br>    <figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo -uhdfs hdfs dfs -<span class="built_in">rmdir</span> /user/Administrator/output</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p><code>hadoop.dll</code>版本问题<br>例如本文系统64bit，但下载使用了32bit的<code>hadoop.dll</code>会提示如下错误，注意选择合适的版本</p>
+  <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"main"</span> <span class="keyword">java.lang.UnsatisfiedLinkError: </span><span class="keyword">org.apache.hadoop.io.nativeio.NativeIO$Windows.access0(Ljava/lang/String;I)Z</span></div><div class="line">	<span class="built_in">at</span> <span class="keyword">org.apache.hadoop.io.nativeio.NativeIO$Windows.access0(Native </span>Method)</div><div class="line">	<span class="built_in">at</span> <span class="keyword">org.apache.hadoop.io.nativeio.NativeIO$Windows.access(NativeIO.java:557)</span></div><div class="line">	<span class="built_in">at</span> <span class="keyword">org.apache.hadoop.fs.FileUtil.canRead(FileUtil.java:977)</span></div><div class="line">	<span class="built_in">at</span> <span class="keyword">org.apache.hadoop.util.DiskChecker.checkAccessByFileMethods(DiskChecker.java:187)</span></div><div class="line">......</div></pre></td></tr></table></figure>
+</li>
+<li><p>没有权限读写HDFS目录</p>
+ <figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">16</span>/08/<span class="number">21</span> <span class="number">22</span><span class="symbol">:</span><span class="number">18</span><span class="symbol">:</span><span class="number">34</span> WARN mapred.<span class="symbol">LocalJobRunner:</span> job_local1007099459_0001</div><div class="line">org.apache.hadoop.security.<span class="symbol">AccessControlException:</span> Permission <span class="symbol">denied:</span> user=Administrator, access=WRITE, inode=<span class="string">"/user/Administrator"</span><span class="symbol">:hdfs</span><span class="symbol">:supergroup</span><span class="symbol">:drwxr-xr-x</span></div><div class="line">......</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>① 第一种方法<br>通过Cloudera Manager，在<code>Clusters</code>–&gt;<code>HDFS</code>–&gt;<code>Configurations</code>，查找<code>Check HDFS Permissions</code>，取消选中，则HDFS文件操作时不会检查权限。<br>② 第二种方法<br>通过修改目录权限，可以修改HDFS目录<code>Administrator</code>权限为757<br>    <figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/<span class="regexp">/查看当前Administrator目录及子目录权限</span></div><div class="line">hdfs dfs -ls -d /user<span class="regexp">/Administrator</span></div><div class="line">hdfs dfs -ls -d -R /user<span class="regexp">/Administrator/</span>*</div><div class="line"><span class="regexp">//</span>修改Administrator目录权限，使Other可以读写</div><div class="line">sudo -uhdfs hdfs dfs -chmod -R <span class="number">757</span> /user/Administrator</div></pre></td></tr></table></figure></p>
+<p>③第三种方法<br>通过修改HDFS目录<code>Administrator</code>所有者为<code>Administrator</code><br>    <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo -uhdfs hdfs dfs -chown -R <span class="string">Administrator:</span>Administrator <span class="regexp">/user/</span>Administrator</div><div class="line">hdfs dfs -ls -d <span class="regexp">/user/</span>Administrator</div><div class="line">hdfs dfs -ls <span class="regexp">/user/</span>Administrator</div></pre></td></tr></table></figure></p>
+<p>④ 第四种方法<br>直接以指定用户执行，在JVM Arguments中指定参数<br>    <figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">-DHADOOP_USER_NAME</span>=hadoop</div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong>推荐第三种方法，第一种方法将所有HDFS数据暴露给任何用户，风险很大；第二种方法，只针对指定目录<code>Administrator</code>，将目录<code>Administrator</code>暴露给了任何用户，也存在风险；第三种方法，只允许指定用户<code>Administrator</code>读写目录<code>Administrator</code>，安全性最高。</p>
+<ul>
+<li><code>winutils.exe</code>无法正常运行 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">16/08/21 22:47:03 INFO util.ProcfsBasedProcessTree: ProcfsBasedProcessTree currently is supported only on Linux.</div><div class="line">16/08/21 22:47:03 ERROR util.WindowsBasedProcessTree: ExitCodeException exitCode=-1073741515: </div><div class="line"><span class="code">......</span></div><div class="line">16/08/21 22:47:03 INFO mapred.Task:  Using ResourceCalculatorProcessTree : null</div><div class="line">......</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>原因是<code>winutils.exe</code>运行时缺少必须的dll支持，如下图，本文环境下缺失<code>vcruntime140.dll</code>：<br><strong>注：</strong>缺失的dll应该和系统环境有关，可能不一样，确保运行<code>winutils.exe</code>没有错误即可。<br><img src="http://7xixm6.com1.z0.glb.clouddn.com/image/note/blogwinutils_error.png" alt="此处输入图片的描述"><br>解决方法：下载安装必要的软件，获取缺少的dll，下载地址如下<br><a href="https://www.microsoft.com/en-US/download/details.aspx?id=48145" target="_blank" rel="external">https://www.microsoft.com/en-US/download/details.aspx?id=48145</a></p>
+<ul>
+<li><p>Windows系统当前用户在<code>DFS Location</code>中没有权限操作HDFS<br>如下图，采用前面问题中第三种方法，可获取<code>Administrator</code>目录操作权限。<br><img src="http://7xixm6.com1.z0.glb.clouddn.com/image/note/blogpermission_denied_user_Administrator.png" alt="此处输入图片的描述"></p>
+</li>
+<li><p>Windows调用Hadoop Yarn异常<br>在Windows的Eclipse作为客户端提交任务到Linux Hadoop集群才会出现的问题，如果是Linux的Eclipse提交任务到Linux Hadoop集群则不会出现这样的问题。</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">22</span> <span class="number">02</span>:<span class="number">42</span>:<span class="number">18</span> INFO mapreduce<span class="selector-class">.Job</span>: Job job_1471744100374_0003 failed with state FAILED due to: Application application_1471744100374_0003 failed <span class="number">2</span> times due to AM Container <span class="keyword">for</span> appattempt_1471744100374_0003_000002 exited with  exitCode: <span class="number">1</span></div><div class="line">For more detailed output, check application tracking page:http:<span class="comment">//master:8088/proxy/application_1471744100374_0003/Then, click on links to logs of each attempt.</span></div><div class="line">Diagnostics: Exception from container-launch.</div><div class="line">Container id: container_1471744100374_0003_02_000001</div><div class="line">Exit <span class="selector-tag">code</span>: <span class="number">1</span></div><div class="line">Exception message: /bin/bash: line <span class="number">0</span>: fg: no job control</div><div class="line"></div><div class="line">Stack trace: ExitCodeException exitCode=<span class="number">1</span>: /bin/bash: line <span class="number">0</span>: fg: no job control</div><div class="line"></div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.util</span><span class="selector-class">.Shell</span><span class="selector-class">.runCommand</span>(Shell<span class="selector-class">.java</span>:<span class="number">578</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.util</span><span class="selector-class">.Shell</span><span class="selector-class">.run</span>(Shell<span class="selector-class">.java</span>:<span class="number">481</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.util</span><span class="selector-class">.Shell</span><span class="variable">$ShellCommandExecutor</span>.execute(Shell<span class="selector-class">.java</span>:<span class="number">763</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.yarn</span><span class="selector-class">.server</span><span class="selector-class">.nodemanager</span><span class="selector-class">.DefaultContainerExecutor</span><span class="selector-class">.launchContainer</span>(DefaultContainerExecutor<span class="selector-class">.java</span>:<span class="number">213</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.yarn</span><span class="selector-class">.server</span><span class="selector-class">.nodemanager</span><span class="selector-class">.containermanager</span><span class="selector-class">.launcher</span><span class="selector-class">.ContainerLaunch</span><span class="selector-class">.call</span>(ContainerLaunch<span class="selector-class">.java</span>:<span class="number">302</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.yarn</span><span class="selector-class">.server</span><span class="selector-class">.nodemanager</span><span class="selector-class">.containermanager</span><span class="selector-class">.launcher</span><span class="selector-class">.ContainerLaunch</span><span class="selector-class">.call</span>(ContainerLaunch<span class="selector-class">.java</span>:<span class="number">82</span>)</div><div class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.concurrent</span><span class="selector-class">.FutureTask</span><span class="selector-class">.run</span>(FutureTask<span class="selector-class">.java</span>:<span class="number">262</span>)</div><div class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.concurrent</span><span class="selector-class">.ThreadPoolExecutor</span><span class="selector-class">.runWorker</span>(ThreadPoolExecutor<span class="selector-class">.java</span>:<span class="number">1145</span>)</div><div class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.concurrent</span><span class="selector-class">.ThreadPoolExecutor</span><span class="variable">$Worker</span>.run(ThreadPoolExecutor<span class="selector-class">.java</span>:<span class="number">615</span>)</div><div class="line">	at java<span class="selector-class">.lang</span><span class="selector-class">.Thread</span><span class="selector-class">.run</span>(Thread<span class="selector-class">.java</span>:<span class="number">745</span>)</div><div class="line"></div><div class="line">Container exited with <span class="selector-tag">a</span> non-zero exit <span class="selector-tag">code</span> <span class="number">1</span></div><div class="line">Failing this attempt. Failing the application.</div><div class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">22</span> <span class="number">02</span>:<span class="number">42</span>:<span class="number">18</span> INFO mapreduce<span class="selector-class">.Job</span>: Counters: <span class="number">0</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>① 方法一：<br>直接在程序中添加配置信息<br>    <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conf<span class="meta">.set</span>(<span class="string">"mapreduce.app-submission.cross-platform"</span>, <span class="string">"true"</span>)<span class="comment">;</span></div></pre></td></tr></table></figure></p>
+<p>② 方法二：<br>在配置文件<code>mapred-site.xml</code>中添加配置信息<br>    <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapred.remote.os<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>Linux<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Remote MapReduce framework's OS, can be either Linux or Windows<span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.app-submission.cross-platform<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>运行MapReduce程序，找不到jar包  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">22</span> <span class="number">12</span>:<span class="number">51</span>:<span class="number">32</span> WARN mapreduce<span class="selector-class">.JobSubmitter</span>: No job jar file set.  User classes may not be found. See Job or Job#setJar(String)</div><div class="line"><span class="number">16</span>/<span class="number">08</span>/<span class="number">22</span> <span class="number">04</span>:<span class="number">18</span>:<span class="number">18</span> INFO mapreduce<span class="selector-class">.Job</span>: Task Id : attempt_1471744100374_0013_m_000003_0, Status : FAILED</div><div class="line">Error: java<span class="selector-class">.lang</span><span class="selector-class">.RuntimeException</span>: java<span class="selector-class">.lang</span><span class="selector-class">.ClassNotFoundException</span>: Class im<span class="selector-class">.samwong</span><span class="selector-class">.examples</span><span class="selector-class">.WordCount</span><span class="variable">$TokenizerMapper</span> not found</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.conf</span><span class="selector-class">.Configuration</span><span class="selector-class">.getClass</span>(Configuration<span class="selector-class">.java</span>:<span class="number">2199</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.mapreduce</span><span class="selector-class">.task</span><span class="selector-class">.JobContextImpl</span><span class="selector-class">.getMapperClass</span>(JobContextImpl<span class="selector-class">.java</span>:<span class="number">196</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.mapred</span><span class="selector-class">.MapTask</span><span class="selector-class">.runNewMapper</span>(MapTask<span class="selector-class">.java</span>:<span class="number">745</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.mapred</span><span class="selector-class">.MapTask</span><span class="selector-class">.run</span>(MapTask<span class="selector-class">.java</span>:<span class="number">341</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.mapred</span><span class="selector-class">.YarnChild</span>$<span class="number">2</span>.run(YarnChild<span class="selector-class">.java</span>:<span class="number">164</span>)</div><div class="line">	at java<span class="selector-class">.security</span><span class="selector-class">.AccessController</span><span class="selector-class">.doPrivileged</span>(Native Method)</div><div class="line">	at javax<span class="selector-class">.security</span><span class="selector-class">.auth</span><span class="selector-class">.Subject</span><span class="selector-class">.doAs</span>(Subject<span class="selector-class">.java</span>:<span class="number">415</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.security</span><span class="selector-class">.UserGroupInformation</span><span class="selector-class">.doAs</span>(UserGroupInformation<span class="selector-class">.java</span>:<span class="number">1693</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.mapred</span><span class="selector-class">.YarnChild</span><span class="selector-class">.main</span>(YarnChild<span class="selector-class">.java</span>:<span class="number">158</span>)</div><div class="line">Caused by: java<span class="selector-class">.lang</span><span class="selector-class">.ClassNotFoundException</span>: Class im<span class="selector-class">.samwong</span><span class="selector-class">.examples</span><span class="selector-class">.WordCount</span><span class="variable">$TokenizerMapper</span> not found</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.conf</span><span class="selector-class">.Configuration</span><span class="selector-class">.getClassByName</span>(Configuration<span class="selector-class">.java</span>:<span class="number">2105</span>)</div><div class="line">	at org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.conf</span><span class="selector-class">.Configuration</span><span class="selector-class">.getClass</span>(Configuration<span class="selector-class">.java</span>:<span class="number">2197</span>)</div><div class="line">	... <span class="number">8</span> more</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个问题应该是hadoop eclipse插件未能成功将程序打包，暂未找到更好的解决方法，暂时只能在程序中手动指定jar包，<code>右键工程</code>–&gt;<code>Export</code>–&gt;<code>java</code>–&gt;<code>JAR file</code>–&gt;<code>NEXT</code>–&gt;指定<code>JAR file</code>路径–&gt;<code>NEXT</code>–&gt;<code>NEXT</code>–&gt;选择<code>Main class</code>–&gt;<code>Finish</code>，最后在程序中指定JAR包，如下：<br>    <figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//job.setJarByClass(WordCount.class);</span></div><div class="line">job.setJar(<span class="string">"C:<span class="subst">\\</span>Code<span class="subst">\\</span>Eclipse<span class="subst">\\</span>WordCount.jar"</span>);</div></pre></td></tr></table></figure></p>
+<p>参考链接：<br><a href="http://stackoverflow.com/questions/21373550/class-not-found-exception-in-mapreduce-wordcount-job" target="_blank" rel="external">Class Not Found Exception in Mapreduce wordcount job</a></p>
+<ul>
+<li><p>DFS Location错误<br><img src="http://7xixm6.com1.z0.glb.clouddn.com/mapreduce_location_error.png" alt="此处输入图片的描述"><br>这个问题和Hadoop Eclipse Plugin有关，重新检查Hadoop Eclipse插件版本等信息是否正确。</p>
+</li>
+<li><p>Java Heap内存不足</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="selector-class">.lang</span><span class="selector-class">.OutOfMemoryError</span>: Java heap space</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>① 方法一：<br>在运行前设置参数，在<code>Run</code>–&gt;<code>Run Configuration</code>–&gt;<code>Argument</code>页的<code>vm arguments</code>框里输入<code>-Xmx512m</code>, 保存重新运行。<br>② 方法二：<br>设置环境变量<br>    <figure class="highlight nix"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">JAVA_OPTS="-server</span> -Xms800m -Xmx800m -XX:<span class="attr">PermSize=64M</span> -XX:<span class="attr">MaxNewSize=256m</span> -XX:<span class="attr">MaxPermSize=128m</span> -Djava.awt.<span class="attr">headless=true</span> <span class="string">"</span></div></pre></td></tr></table></figure></p>
+<p><strong>注：</strong> <code>-Xms &lt;size&gt;</code>设置JVM初始化堆内存大小；<code>-Xmx &lt;size&gt;</code>设置JVM最大的堆内存大小。</p>
+<h2 id="3-配置Spark-Eclipse开发环境"><a href="#3-配置Spark-Eclipse开发环境" class="headerlink" title="3. 配置Spark Eclipse开发环境"></a>3. 配置Spark Eclipse开发环境</h2><h3 id="3-1-配置Spark-Eclipse开发环境"><a href="#3-1-配置Spark-Eclipse开发环境" class="headerlink" title="3.1 配置Spark Eclipse开发环境"></a>3.1 配置Spark Eclipse开发环境</h3><ul>
+<li>安装Eclipse插件<code>Maven Integration for Scala IDE</code><br>打开Eclipse–&gt;<code>Help</code>–&gt;<code>Install New Software</code>–&gt;在Work with中输入<code>http://alchim31.free.fr/m2e-scala/update-site/</code>–&gt;<code>Select All</code>–&gt;安装<code>Maven Integration for Scala IDE</code></li>
+</ul>
+<p><a href="http://repo.maven.apache.org/maven2/archetype-catalog.xml" target="_blank" rel="external">http://repo.maven.apache.org/maven2/archetype-catalog.xml</a><br>Remote Archetype Catalog</p>
+<p><a href="http://repo.maven.apache.org/maven2/archetype-catalog.xml" target="_blank" rel="external">http://repo.maven.apache.org/maven2/archetype-catalog.xml</a><br>net.alchim31.maven<br>scala-archetype-simple<br>1.6<br><a href="http://repo.maven.apache.org/maven2" target="_blank" rel="external">http://repo.maven.apache.org/maven2</a><br>org.scala-tools.archetypes<br>scala-archetype-simple<br>1.3<br><a href="http://repo.maven.apache.org/maven2" target="_blank" rel="external">http://repo.maven.apache.org/maven2</a></p>
+<ul>
+<li><p>配置Scala开发环境<br>① 按照前面提到的Eclipse Scala IDE Plugin安装方法完成安装，然后在Eclipse中安装点击<code>Window</code>–&gt;<code>Perspective</code>–&gt;<code>Open Perspective</code>–&gt;<code>Other</code>，选择<code>Scala</code>，切换到<code>Scala</code>视图。<br>② 打开<code>Scala</code>–&gt;<code>Run Setup Diagnostics</code>–&gt;<code>User recommended default settings</code>–&gt;<code>OK</code>。<br>③ 打开<code>Window</code>–&gt;<code>Preferences</code>–&gt;<code>Scala</code>–&gt;<code>Compiler</code>–&gt;<code>Standard</code>–&gt;<code>target</code>，选择<code>jvm-1.7</code>。</p>
+</li>
+<li><p>新建Scala工程<br>① <code>File</code>–&gt;<code>New</code>–&gt;<code>Scala Project</code>–&gt;填写<code>Project Name</code>，选择合适的JRE版本–&gt;<code>Finish</code><br>② 在<code>Package Explorer</code>中打开工程，右键<code>Scala library container</code>–&gt;<code>Properties</code>–&gt;<code>Classpath Container</code>–&gt;<code>Fixed Scala Library container: 2.10.6</code><br>③ 右键工程–&gt;<code>Properties</code>–&gt;<code>Java Build Path</code>–&gt;<code>Libraries</code>–&gt;<code>Add External JARs</code>–&gt;打开目录<code>C:\WorkSpace\spark-1.6.0-bin-hadoop2.6\lib</code>，选择<code>spark-assembly-1.6.0-hadoop2.6.0.jar</code>–&gt;<code>OK</code></p>
+</li>
+</ul>
+<h3 id="3-2-测试Spark-Eclipse开发环境"><a href="#3-2-测试Spark-Eclipse开发环境" class="headerlink" title="3.2 测试Spark Eclipse开发环境"></a>3.2 测试Spark Eclipse开发环境</h3><ul>
+<li>本地运行Spark Scala程序<br>① SparkPi<br>新建Scala工程SparkPi，新建<code>SparkPi.scala</code>，代码如下：  <figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> im.samwong.spark.examples</div><div class="line"></div><div class="line"><span class="keyword">import</span> scala.math.random</div><div class="line"><span class="keyword">import</span> org.apache.spark._</div><div class="line"></div><div class="line"><span class="comment">/** Computes an approximation to pi */</span></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">SparkPi</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</div><div class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Spark Pi"</span>).setMaster(<span class="string">"local[2]"</span>)  </div><div class="line">    <span class="keyword">val</span> spark = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">    <span class="keyword">val</span> slices = <span class="keyword">if</span> (args.length &gt; <span class="number">0</span>) args(<span class="number">0</span>).toInt <span class="keyword">else</span> <span class="number">2</span></div><div class="line">    <span class="keyword">val</span> n = math.min(<span class="number">100000</span>L * slices, <span class="type">Int</span>.<span class="type">MaxValue</span>).toInt <span class="comment">// avoid overflow</span></div><div class="line">    <span class="keyword">val</span> count = spark.parallelize(<span class="number">1</span> until n, slices).map &#123; i =&gt;</div><div class="line">      <span class="keyword">val</span> x = random * <span class="number">2</span> - <span class="number">1</span></div><div class="line">      <span class="keyword">val</span> y = random * <span class="number">2</span> - <span class="number">1</span></div><div class="line">      <span class="keyword">if</span> (x*x + y*y &lt; <span class="number">1</span>) <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span></div><div class="line">    &#125;.reduce(_ + _)</div><div class="line">    println(<span class="string">"Pi is roughly "</span> + <span class="number">4.0</span> * count / n)</div><div class="line">    spark.stop()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>② 本地运行WordCount<br>新建Scala工程WordCount，新建WordCount.scala，代码如下：<br>    <figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> im.samwong.spark.examples</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkConf</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkContext</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span>.rddToPairRDDFunctions</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span> </span>&#123;</div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</div><div class="line">     <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Word Count"</span>).setMaster(<span class="string">"local[2]"</span>)</div><div class="line">    </div><div class="line">     <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)   </div><div class="line">     <span class="keyword">val</span> lines = sc.textFile(<span class="string">"C:\\WorkSpace\\spark-1.6.0-bin-hadoop2.6\\README.md"</span>, <span class="number">1</span>)</div><div class="line">     <span class="keyword">val</span> words = lines.flatMap &#123; line =&gt; line.split(<span class="string">" "</span>) &#125;</div><div class="line">     <span class="keyword">val</span> pairs = words.map&#123;word =&gt;(word,<span class="number">1</span>)&#125;</div><div class="line">     <span class="keyword">val</span> wordCounts = pairs.reduceByKey(_+_)</div><div class="line">     wordCounts.foreach(pair =&gt; println(pair._1+<span class="string">":"</span>+pair._2))</div><div class="line">     sc.stop()</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="http://www.oracle.com/technetwork/java/archive-139210.html" target="_blank" rel="external">Oracle Java Archive  </a></li>
+<li><a href="http://www.powerxing.com/hadoop-build-project-using-eclipse/" target="_blank" rel="external">使用Eclipse编译运行MapReduce程序</a></li>
+<li><a href="http://blog.csdn.net/panguoyuan/article/details/37694973" target="_blank" rel="external">解决Win7下eclipse运行Mapreduce程序解决办法汇总</a></li>
+<li><a href="http://blog.csdn.net/a921122/article/details/51907322" target="_blank" rel="external">Windows Eclipse远程调试hadoop：ExitCodeException exitCode=-1073741515</a></li>
+<li><a href="http://www.cnblogs.com/riordon/p/4712776.html" target="_blank" rel="external">Eclipse远程提交hadoop集群任务</a></li>
+<li><a href="http://my.oschina.net/muou/blog/408543" target="_blank" rel="external">Windows下使用Hadoop2.6.0-eclipse-plugin插件</a></li>
+<li><a href="http://blog.csdn.net/osg_yanglinping/article/details/25702333" target="_blank" rel="external">Hadoop学习之Win7下 Hadoop-2.4.0 Eclipse插件编译实践</a></li>
+<li><a href="http://kevin12.iteye.com/blog/2274179" target="_blank" rel="external">eclipse开发spark程序配置本地运行</a></li>
+<li><a href="http://my.oschina.net/u/1244232/blog/515075" target="_blank" rel="external">Spark Eclipse 开发环境搭建</a></li>
+<li><a href="http://www.tuicool.com/articles/Ajuyqan" target="_blank" rel="external">如何在CDH5上运行Spark应用</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>请我吃糖果~</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sam Wong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Sam Wong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+            <a href="/tags/Spark/" rel="tag"># Spark</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+            <a href="/tags/Eclipse/" rel="tag"># Eclipse</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/20/Install CDH5.7.2 on Ubuntu Server 14.04/" rel="next" title="Ubuntu Server 14.04 安装部署 CDH5.7.2">
+                <i class="fa fa-chevron-left"></i> Ubuntu Server 14.04 安装部署 CDH5.7.2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/22/Compile source code of Hadoop 2.6.0 on Windows 10/" rel="prev" title="Windows 10编译Hadoop 2.6.0源码">
+                Windows 10编译Hadoop 2.6.0源码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5868d93f6405e50d" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/"
+           data-title="Windows下基于CDH配置Hadoop&Spark Eclipse开发环境" data-url="http://samwong.im/2016/08/21/Config the development environment of Hadoop&Spark on Windows based CDH/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sam Wong" />
+          <p class="site-author-name" itemprop="name">Sam Wong</p>
+          <p class="site-description motion-element" itemprop="description">后知后觉，勿忘初心。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ncepuwanghui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/wh694695498" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/ncepuwanghui" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-下载配置相关软件"><span class="nav-text">1. 下载配置相关软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-JDK"><span class="nav-text">1.1 JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Eclipse"><span class="nav-text">1.2 Eclipse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Hadoop和相关插件"><span class="nav-text">1.3 Hadoop和相关插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Spark、Scala及相关工具"><span class="nav-text">1.4 Spark、Scala及相关工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-配置Hadoop-Eclipse开发环境"><span class="nav-text">2. 配置Hadoop Eclipse开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-配置Hadoop-Eclipse开发环境"><span class="nav-text">2.1 配置Hadoop Eclipse开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-测试Hadoop-Eclipse开发环境"><span class="nav-text">2.2 测试Hadoop Eclipse开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-可能遇到的错误"><span class="nav-text">2.3 可能遇到的错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-配置Spark-Eclipse开发环境"><span class="nav-text">3. 配置Spark Eclipse开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-配置Spark-Eclipse开发环境"><span class="nav-text">3.1 配置Spark Eclipse开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-测试Spark-Eclipse开发环境"><span class="nav-text">3.2 测试Spark Eclipse开发环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sam Wong</span>
+  
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        <!-- 
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"> 本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+ -->
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"samwong"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Pg7bNsCbm5M8cCpVEdQH1iss-gzGzoHsz", "0opPvPSL16Auyc8J4KG8INHI");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>
